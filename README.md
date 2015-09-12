@@ -26,6 +26,7 @@
 2. $``sudo apt-get update``
 3. $``sudo apt-get install ffmpeg``
 4. $``sudo apt-get install frei0r-plugins``
+
 ###Cài đặt ứng dụng:
 1. Di chuyển đến thư mục chứa ứng dụng
 2. $``sudo apt-get install build-essential``
