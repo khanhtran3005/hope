@@ -1,0 +1,173 @@
+<section data-ng-controller="SprintsController" data-ng-init="findOne()">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="grid simple">
+        <div class="grid-title no-border">
+          <div class="col-md-10">
+            <h3>Sprint:
+            <span class="semi-bold" ng-bind="sprint.name"></span>
+          </h3>
+            <p>
+              <small>from: {{sprint.startDate | date:'mediumDate'}} &ensp;&ensp; to: {{sprint.endDate | date:'mediumDate'}}</small> - {{sprint.time}} days - {{sprint.time * 8}} hours
+            </p>
+            <blockquote class="margin-top-20" ng-bind="sprint.description">
+            </blockquote>
+          </div>
+          <div class="col-md-2 text-right" data-ng-show="((authentication.user) && (authentication.user._id == sprint.user._id))">
+            <a class="btn btn-primary" data-ui-sref="viewProject.editSprint({sprintId: sprint._id})">
+              <i class="glyphicon glyphicon-edit"></i>
+            </a>
+            <a class="btn btn-primary" data-ng-click="remove()">
+              <i class="glyphicon glyphicon-trash"></i>
+            </a>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+      <div class="grid-body no-border">
+        <div class="grid simple">
+          <div class="grid-title border-t">
+            <h4>Backlogs</h4>
+            <div class="tools"> <a href="javascript:;" class="collapse"></a></div>
+          </div>
+          <div class="grid-body no-border">
+            <div class="row">
+              <div class="col-sm-6 col-md-6">
+                <p>Sprint Backlogs</p>
+                <div class="panel-group" id="accordion-develop" data-toggle="collapse">
+                  <div class="panel" ng-class="{'panel-sprint-danger': sprint.time * 8 < sumHours(sprint_backlogs)}">
+                    <div class="panel-heading panel-sprint-danger-heading collapsed">
+                      <h4 class="panel-title">
+                          <a class="" data-toggle="collapse" data-parent="#accordion-develop" href="#collapse-team-0">
+                            Unassigned backlogs - <ng-pluralize count="countBacklogs(sprint_backlogs)" when="{'1': '1 backlog', 'other': '{{countBacklogs(sprint_backlogs)}} backlogs'}"></ng-pluralize> - <ng-pluralize count="sumHours(sprint_backlogs)" when="{'0': '0 hour', '1': '1 hour', 'other': '{{sumHours(sprint_backlogs)}} hours'}"></ng-pluralize>
+                            <span ng-show="sprint.time * 8 < sumHours(sprint_backlogs) && countBacklogs(sprint_backlogs) !==0"> - exceeded <ng-pluralize count="sumHours(sprint_backlogs) - sprint.time * 8" when="{'0': 'hour', '1': '1 hour', 'other': '{{sumHours(sprint_backlogs) - sprint.time * 8}} hours'}"></ng-pluralize></span>
+                          </a>
+                        </h4>
+                    </div>
+                    <div id="collapse-team-0" class="panel-collapse in" style="height: auto;">
+                      <div class="panel-body">
+                        <div class="grid simple roles">
+                          <ul class="grid-body no-border no-padding" style="min-height: 75px;" dnd-list="sprint_backlogs" dnd-external-sources="true" dnd-external-sources="true" dnd-drop="dropTeamCallback(event, index, item, external, type, null)">
+                            <liv div class="notification-messages info" ng-repeat="backlog in sprint_backlogs | selectBacklogs:false" dnd-draggable="backlog" dnd-effect-allowed="move" dnd-selected="selected3 = backlog" dnd-moved="movedTeamCallback(backlog)" dnd-dragstart="dragStartTeamCallback(backlog)">
+                              <div class="message-wrapper">
+                                <p><span class="semi-bold">{{backlog.name}}</span> | Point: {{backlog.point}} | Time: <ng-pluralize count="backlog.hours" when="{'0': 'hour', '1': '1 hour', 'other': '{{backlog.hours}} hours'}"></ng-pluralize></p>
+                                <div class="description" ng-if="backlog.desc">Desc: {{backlog.desc}}</div>
+                              </div>
+                            </liv>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel" ng-class="{'panel-sprint-danger': sprint.time * 8 < sumHours(sprint_backlogs, team._id)}" ng-repeat="team in develop_teams">
+                    <div class="panel-heading panel-sprint-danger-heading collapsed">
+                      <h4 class="panel-title">
+                          <a class="" data-toggle="collapse" data-parent="#accordion-develop" href="#collapse-team-{{team._id}}">
+                            {{team.name}} - <ng-pluralize count="team.people.length" when="{'0': '0 member', '1': '1 member', 'other': '{{team.people.length}} members'}"></ng-pluralize> - <ng-pluralize count="countBacklogs(sprint_backlogs, team._id)" when="{'0': '0 backlog', '1': '1 backlog', 'other': '{{countBacklogs(sprint_backlogs, team._id)}} backlogs'}"></ng-pluralize>
+                            <span ng-show="sprint.time * 8 < sumHours(sprint_backlogs, team._id)"> - exceeded <ng-pluralize count="sumHours(sprint_backlogs, team._id) - sprint.time * 8" when="{'0': 'hour', '1': '1 hour', 'other': '{{sumHours(sprint_backlogs, team._id) - sprint.time * 8}} hours'}"></ng-pluralize></span>
+                          </a>
+                        </h4>
+                    </div>
+                    <div id="collapse-team-{{team._id}}" class="panel-collapse in" style="height: auto;">
+                      <div class="panel-body">
+                        <div class="grid simple roles">
+                          <ul class="grid-body no-border no-padding" style="min-height: 75px;" dnd-list="sprint_backlogs" dnd-external-sources="true" dnd-external-sources="true" dnd-drop="dropTeamCallback(event, index, item, external, type, team)">
+                            <liv div class="notification-messages info" ng-repeat="backlog in sprint_backlogs | selectBacklogs:team" dnd-draggable="backlog" dnd-effect-allowed="move" dnd-selected="selected1 = backlog" dnd-moved="movedTeamCallback(backlog)" dnd-dragstart="dragStartTeamCallback(backlog)">
+                              <div class="message-wrapper">
+                                <p><span class="semi-bold">{{backlog.name}}</span> | Point: {{backlog.point}} | Time: <ng-pluralize count="backlog.hours" when="{'0': 'hour', '1': '1 hour', 'other': '{{backlog.hours}} hours'}"></ng-pluralize></p>
+                                <div class="description" ng-if="backlog.desc">Desc: {{backlog.desc}}</div>
+                              </div>
+                            </liv>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6">
+                <p>Product Backlogs</p>
+                <div class="panel-group" id="accordion-free" data-toggle="collapse">
+                  <div class="panel" ng-class="{'panel-sprint-danger': sprint.time * 8 < sumHours(free_backlogs)}">
+                    <div class="panel-heading panel-sprint-danger-heading collapsed">
+                      <h4 class="panel-title">
+                          <a class="" data-toggle="collapse" data-parent="#accordion-free" href="#collapse-free-0">
+                            Unassigned backlogs  - <ng-pluralize count="countBacklogs(free_backlogs)" when="{'0': '0 backlog', '1': '1 backlog', 'other': '{{countBacklogs(free_backlogs)}} backlogs'}"></ng-pluralize> - <ng-pluralize count="sumHours(free_backlogs)" when="{'0': '0 hour', '1': '1 hour', 'other': '{{sumHours(free_backlogs)}} hours'}"></ng-pluralize>
+                            <span ng-show="sprint.time * 8 < sumHours(free_backlogs)"> - exceeded <ng-pluralize count="sumHours(free_backlogs) - sprint.time * 8" when="{'0': 'hour', '1': '1 hour', 'other': '{{sumHours(free_backlogs) - sprint.time * 8}} hours'}"></ng-pluralize></span>
+                          </a>
+                        </h4>
+                    </div>
+                    <div id="collapse-free-0" class="panel-collapse in" style="height: auto;">
+                      <div class="panel-body">
+                        <div class="grid simple roles">
+                          <ul class="grid-body no-border no-padding" style="min-height: 75px;" dnd-list="free_backlogs" dnd-external-sources="true" dnd-external-sources="true" dnd-drop="dropFreeCallback(event, index, item, external, type, null)">
+                            <liv div class="notification-messages info" ng-repeat="backlog in free_backlogs | selectBacklogs:false" dnd-draggable="backlog" dnd-effect-allowed="move" dnd-selected="selected3 = backlog" dnd-moved="movedFreeCallback(backlog)" dnd-dragstart="dragStartFreeCallback(backlog)">
+                              <div class="message-wrapper">
+                                <p><span class="semi-bold">{{backlog.name}}</span> | Point: {{backlog.point}} | Time: <ng-pluralize count="backlog.hours" when="{'0': 'hour', '1': '1 hour', 'other': '{{backlog.hours}} hours'}"></ng-pluralize></p>
+                                <div class="description" ng-if="backlog.desc">Desc: {{backlog.desc}}</div>
+                              </div>
+                            </liv>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="panel" ng-repeat="team in develop_teams" ng-class="{'panel-sprint-danger': sprint.time * 8 < sumHours(free_backlogs, team._id)}">
+                    <div class="panel-heading panel-sprint-danger-heading collapsed">
+                      <h4 class="panel-title">
+                          <a class="" data-toggle="collapse" data-parent="#accordion-free" href="#collapse-free-{{team._id}}">
+                            {{team.name}} - <ng-pluralize count="team.people.length" when="{'0': '0 member', '1': '1 member', 'other': '{{team.people.length}} members'}"></ng-pluralize> - <ng-pluralize count="countBacklogs(free_backlogs, team._id)" when="{'0': '0 backlog','1': '1 backlog', 'other': '{{countBacklogs(free_backlogs, team._id)}} backlogs'}"></ng-pluralize>
+                            <span ng-show="sprint.time * 8 < sumHours(free_backlogs, team._id) && countBacklogs(free_backlogs) !==0"> - exceeded <ng-pluralize count="sumHours(free_backlogs, team._id) - sprint.time * 8" when="{'0': 'hour', '1': '1 hour', 'other': '{{sumHours(free_backlogs, team._id) - sprint.time * 8}} hours'}"></ng-pluralize></span>
+                          </a>
+                        </h4>
+                    </div>
+                    <div id="collapse-free-{{team._id}}" class="panel-collapse in" style="height: auto;">
+                      <div class="panel-body">
+                        <div class="grid simple roles">
+                          <ul class="grid-body no-border no-padding" style="min-height: 75px;" dnd-list="free_backlogs" dnd-external-sources="true" dnd-external-sources="true" dnd-drop="dropFreeCallback(event, index, item, external, type, team)">
+                            <liv div class="notification-messages info" ng-repeat="backlog in free_backlogs | selectBacklogs:team" dnd-draggable="backlog" dnd-effect-allowed="move" dnd-selected="selected2 = backlog" dnd-moved="movedFreeCallback(backlog)" dnd-dragstart="dragStartFreeCallback(backlog)">
+                              <div class="message-wrapper">
+                                <p><span class="semi-bold">{{backlog.name}}</span> | Point: {{backlog.point}} | Time: <ng-pluralize count="backlog.hours" when="{'0': 'hour', '1': '1 hour', 'other': '{{backlog.hours}} hours'}"></ng-pluralize></p>
+                                <div class="description" ng-if="backlog.desc">Desc: {{backlog.desc}}</div>
+                              </div>
+                            </liv>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="clear: both;"></div>
+          </div>
+          <div style="clear: both;"></div>
+        </div>
+        <div class="grid simple">
+          <div class="grid-title border-t">
+            <h4>Attachment</h4>
+          </div>
+          <div class="grid-body no-border">
+            <div ng-include src="'modules/resources/views/list-resources.client.view.html'"></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid simple">
+        <div class="grid-title border-t">
+          <h4>Comments</h4>
+        </div>
+        <div class="grid-body no-border">
+          <div ng-include src="'modules/comments/views/share/_comment.box.html'"></div>
+        </div>
+      </div>
+      <div class="grid simple">
+        <div class="grid-title border-t">
+          <h4>History</h4>
+        </div>
+        <div class="grid-body no-border">
+          <div ng-include src="'modules/audits/views/list-audits.client.view.html'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

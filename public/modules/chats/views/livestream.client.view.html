@@ -1,0 +1,49 @@
+<div class="livestream-controls">
+    <p ng-init="checkOngoingConf()">
+        <button class="btn btn-block btn-success start hide" type="button" id="create-call">Create a conference</button>
+        <button class="btn btn-block btn-primary join hide" type="button" id="join-call">Join conference</button>
+        <button class="btn btn-block btn-danger end hide" type="button" id="end-call">End conference</button>
+    </p>
+</div>
+
+<div class="livestream-container">
+    <div id="container" ng-dblclick="enterFullScreen($event)">
+        <div id="main">
+            <video autoplay="autoplay" muted="true" class="main-video"></video>
+            <!-- <a href="javascript:;" class="record-btn"><i class="fa fa-camera"></i></a> -->
+        </div>
+        <div id="mini-videos" class="clearfix col-md-12 no-padding">
+            <div id="local">
+
+            </div>
+            <div id="remotes">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="chat-container">
+        <div class="grid-body no-border">
+            <div class="row-fluid">
+                <div class="scroller" data-height="200px">
+                    <div class="row" ng-repeat="message in meeting.confMessages" ng-class="user._id === message.user._id ? 'cmt-owner': 'cmt-other'"><div class="col-md-12">
+                        <div class="grid simple vertical">
+                            <p class="display-name">@{{message.user.displayName}}</p>
+                            <p class="cmt-content">{{message.message}}</p>
+                        </div>
+                    </div></div>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="input-text-chat" class="form-control" placeholder="Enter Text Chat">
+                    <span class="input-group-addon primary">		
+                    	<i class="fa fa-wechat"></i>
+                    </span>
+
+                    <span class="input-group-addon primary" title="Share files" id="share-file">		
+                    <i class="fa fa-files-o"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

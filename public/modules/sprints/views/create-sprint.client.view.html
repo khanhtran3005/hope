@@ -1,0 +1,74 @@
+<section data-ng-controller="SprintsController as sprint">
+  <div class="row">
+    <div class="col-md-12">
+      <form name="form" data-ng-submit="create()" novalidate>
+        <div class="grid simple">
+          <div class="grid-title no-border">
+            <h3>New
+              <span class="semi-bold">sprint</span>
+            </h3>
+          </div>
+          <div class="grid-body no-border">
+            <br>
+            <div class="row">
+              <div class="col-md-8 col-sm-10 col-xs-12">
+                <div ng-class="{'has-error': form.name.$error.required&&form.name.$dirty}" class="form-group">
+                  <label class="form-label">Sprint's name
+                    <span class="required">*</span>
+                  </label>
+                  <div class="input-group">
+                    <input type="text" name="name" ng-model="name" required class="form-control">
+                    <span class="input-group-addon primary">
+                                        <span class="arrow"></span>
+                    <i class="fa fa-align-justify"></i>
+                    </span>
+                  </div>
+                  <span class="help-block" ng-show="form.name.$error.required&&form.name.$dirty">Sprint's name is required.</span>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Description</label>
+                  <textarea class="form-control" name="description" ng-model="description" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Date range</label>
+                  <div class="input-group">
+                    <input type="daterange" ng-model="daterange" separator=" &#8667; " format="MMM Do YYYY" limit="31 days" min-date="{{today}}" class="form-control" placeholder="Username">
+                    <span class="input-group-addon primary">
+                                        <span class="arrow"></span>
+                    <i class="fa fa-th"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <label class="form-label">Color</label>
+                    <!-- <p>{{color}}</p> -->
+                    <input type="color" name="color" id="color" ng-model="color">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Icon</label>
+                    <!-- <p>{{icons.selected}}</p> -->
+                    <ui-select on-select="sprint.iconSelected($item)" ng-model="icons.selected" theme="select2" search-enabled="searchEnabled" style="min-width: 150px;">
+                      <ui-select-match placeholder="Select or type search icon"><i class="{{$select.selected.value}}"></i>&ensp;&ensp;&ensp;{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="icon in icons | props: {name: $select.search}" class="text-left">
+                        <p><i class="{{icon.value}}"></i>&ensp;&ensp;&ensp;<span ng-bind-html="icon.name | highlight: $select.search"></span>
+                        </p>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input ng-disabled="form.$invalid" type="submit" class="btn btn-primary btn-cons">
+                </div>
+                <div data-ng-show="error" class="text-danger">
+                  <strong data-ng-bind="error"></strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

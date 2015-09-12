@@ -1,0 +1,39 @@
+<section data-ng-controller="TasksController" data-ng-init="find()">
+  <div>
+    <button type="button" class="btn btn-info btn-cons" ng-click="modalNew()">New task</button>
+  </div>
+  <div class="task-highlight">
+    <div class="col-sm-4 tasks-m-b-5" ng-repeat="task_item in tasks" ng-dblclick="show(task_item)">
+      <div class="tiles white">
+        <div class="tiles-body">
+          <div class="user-comment-wrapper tasks-user-comment-wrapper pull-left">
+            <div class="profile-wrapper">
+              <img ng-src="{{task_item.user.profileURL}}" width="35" height="35">
+            </div>
+            <div class="comment">
+              <div class="user-name text-black bold">
+                <span class="semi-bold">{{task_item.name}}</span>
+              </div>
+              <span class="label label-info">{{task_item.task_status}}</span>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="clearfix"></div>
+          <div class="">
+            <p>{{task_item.desc}}</p>
+            <div>
+              <div class="progress progress-striped active progress-large tasks-bar">
+                <div data-percentage="0%" style="width: {{task_item.task_percent}}%;" class="progress-bar progress-bar-success"></div>
+              </div>
+              <span class="tasks-bar-percent">
+                 {{task_item.remaining}} - {{task_item.task_percent}}%
+               </span>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="clear:both"></div>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+<form name="confirm" ng-submit="upload()">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" data-ng-click="cancel()">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title" style="text-transform: uppercase">Upload Recorded</h4>
+    </div>
+    <div class="modal-body project-modal">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+
+                    <label class="form-label">Named for recorded video
+                        <span class="required">*</span>
+                    </label>
+                    <div class="controls">
+                        <input type="text" name="title" ng-model="recorded.title" required="" class="form-control">
+                    </div>
+                    <span class="help-block error" ng-show="confirm.title.$error.required&&confirm.title.$dirty">Sprint's name is required.</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" ng-disabled="confirm.$invalid">Upload</button>
+        <button type="button" class="btn btn-default" data-ng-click="cancel()">Cancel</button>
+    </div>
+</form>

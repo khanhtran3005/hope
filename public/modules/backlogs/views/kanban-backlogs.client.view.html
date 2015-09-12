@@ -1,0 +1,89 @@
+<section class='kanban' data-ng-controller="BacklogsController" data-ng-init="find()">
+  <button type="button" class="btn btn-block btn-info" data-ng-click="modalNew()">
+    <span class="bold">Create new Backlogs</span>
+  </button>
+  <tabset class="tabbable tabs-left">
+    <tab ng-repeat="backlog_item in backlogs" ng-dblclick="show(backlog_item)" ng-click="currentTab(backlog_item)" active="backlog_item.tab_active">
+      <tab-heading>
+        <h4><p class="name">{{backlog_item.name}}</p></h4>
+        <progressbar value="backlog_item.process_percent" type="success" style="height: 9px;" class="m-b-10" max="100"></progressbar>
+        <p>Team: <span class="semi-bold">{{backlog_item.assignee.name}}</span>
+        </p>
+      </tab-heading>
+      <section data-ng-controller="TasksController" data-ng-init="findKanban(backlog_item, true)">
+        <div class="cold-xs-12 .col-sm-6 col-lg-4 m-b-15">
+          <div class="grid simple horizontal green">
+            <div class="grid-title ">
+              <h4>To do</h4>
+              <div class="btn-group pull-right"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+              </div>
+            </div>
+            <div class="grid-body p-t-10 p-b-10">
+              <ul class="tasks" dnd-list="backlogs" style="min-height: 75px;" dnd-list="tasks" dnd-external-sources="true" dnd-external-sources="true" dnd-drop="dropCallback(event, index, item, external, type, 'To do')">
+                <li class="task row" ng-repeat="task_item in tasks | filter:{ task_status: 'To do' }:true" dnd-draggable="task_item" dnd-effect-allowed="move" dnd-selected="do_selected = task_item">
+                  <a href="javascript:;">
+                    <i class="fa fa-pencil task-edit" ng-click="show(task_item)"></i>
+                  </a>
+                  <p class="title" style="font-weight: bold;">{{task_item.name}}</p>
+                  <div class="more-info">
+                    <small ng-if="task_item.desc">Desc: {{task_item.desc}}</small>
+                    <progressbar value="task_item.task_percent" type="success" style="height: 9px;" class="m-b-10" max="100"></progressbar>
+                    <small class="in-charge" ng-if="task_item.assignee.displayName">@{{task_item.assignee.displayName}}</small>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="cold-xs-12 .col-sm-6 col-lg-4 m-b-15">
+          <div class="grid simple horizontal purple">
+            <div class="grid-title">
+              <h4>In processing</h4>
+              <div class="btn-group pull-right"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+              </div>
+            </div>
+            <div class="grid-body p-t-10 p-b-10">
+              <ul class="tasks" style="min-height: 75px;" dnd-list="tasks" dnd-external-sources="true" dnd-external-sources="true" dnd-drop="dropCallback(event, index, item, external, type, 'Processing')">
+                <li class="task row" ng-repeat="task_item in tasks | filter:{ task_status: 'Processing' }:true" dnd-draggable="task_item" dnd-effect-allowed="move" dnd-selected="processing_selected = task_item">
+                  <a href="javascript:;">
+                    <i class="fa fa-pencil task-edit" ng-click="show(task_item)"></i>
+                  </a>
+                  <p class="title" style="font-weight: bold;">{{task_item.name}}</p>
+                  <div class="more-info">
+                  <small ng-if="task_item.desc">Desc: {{task_item.desc}}</small>
+                    <progressbar value="task_item.task_percent" type="success" style="height: 9px;" class="m-b-10" max="100"></progressbar>
+                    <small class="in-charge" ng-if="task_item.assignee.displayName">@{{task_item.assignee.displayName}}</small>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="cold-xs-12 .col-sm-6 col-lg-4 m-b-15">
+          <div class="grid simple horizontal green">
+            <div class="grid-title ">
+              <h4>Done</h4>
+              <div class="btn-group pull-right"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+              </div>
+            </div>
+            <div class="grid-body p-t-10 p-b-10">
+              <ul class="tasks" style="min-height: 75px;" dnd-list="tasks" dnd-external-sources="true" dnd-external-sources="true" dnd-drop="dropCallback(event, index, item, external, type,  'Done')">
+                <li class="task row" ng-repeat="task_item in tasks | filter:{ task_status: 'Done' }:true" dnd-draggable="task_item" dnd-effect-allowed="move" dnd-selected="done_selected = task_item">
+                  <a href="javascript:;">
+                    <i class="fa fa-pencil task-edit" ng-click="show(task_item)"></i>
+                  </a>
+                  <p class="title" style="font-weight: bold;">{{task_item.name}}</p>
+                  <div class="more-info">
+                    <small ng-if="task_item.desc">Desc: {{task_item.desc}}</small>
+                    <progressbar value="task_item.task_percent" type="success" style="height: 9px;" class="m-b-10" max="100"></progressbar>
+                    <small class="in-charge" ng-if="task_item.assignee.displayName">@{{task_item.assignee.displayName}}</small>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </tab>
+  </tabset>
+</section>

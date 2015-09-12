@@ -1,0 +1,115 @@
+<section class="row" data-ng-controller="TeamsController" data-ng-init="find()">
+  <div class="col-md-8">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="grid simple roles">
+          <div class="grid-title no-border bg-light-grey">
+            <h4><span class="icon-man-people-streamline-user">&ensp;</span>Product Owner</h4>
+          </div>
+          <div class="grid-body no-border no-padding">
+            <div class="row">
+              <ul class="drag-drop-area single col-md-12" data-drop="true" ng-model='productOwner.people' data-jqyoui-options="optionProductOwner" jqyoui-droppable="{multiple:true, onDrop:'dropCallback(productOwner)'}">
+                <li ng-repeat="PO in productOwner.people" class="member">
+                  <div class="profile-detail" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="productOwner.people" jqyoui-draggable="{index: {{$index}}, placeholder:true, onStart:'startCallback(PO, $index)'}">
+                    <img class="member-image" ng-src="{{PO.profileURL}}" alt="" width="85" height="85">
+                    <p class="username text-center bg-green text-white">@{{PO.displayName}}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="grid simple roles">
+          <div class="grid-title no-border bg-light-grey">
+            <h4><i class="icon-torsos">&ensp;</i>Stack holder</h4>
+          </div>
+          <div class="grid-body no-border no-padding">
+            <div class="row">
+              <ul class="drag-drop-area single col-md-12" data-drop="true" ng-model='stackholder.people' data-jqyoui-options="optionStackHolder" jqyoui-droppable="{multiple:true, onDrop:'dropCallback(stackholder)'}">
+                <li ng-repeat="SK in stackholder.people" class="member">
+                  <div class="profile-detail" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="stackholder.people" jqyoui-draggable="{index: {{$index}}, placeholder:true, onStart:'startCallback(SK, , $index)'}">
+                    <img class="member-image" ng-src="{{SK.profileURL}}" alt="" width="85" height="85">
+                    <p class="username text-center bg-green text-white">@{{SK.displayName}}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="grid simple roles">
+          <div class="grid-title no-border bg-light-grey">
+            <h4><span class="glyphicon glyphicon-flag">&ensp;</span>Scrum Master</h4>
+          </div>
+          <div class="grid-body no-border no-padding">
+            <div class="row">
+              <ul class="drag-drop-area single col-md-12" data-drop="true" ng-model='scrumMaster.people' data-jqyoui-options="optionScrumMaster" jqyoui-droppable="{multiple:true, onDrop:'dropCallback(scrumMaster)'}">
+                <li ng-repeat="SM in scrumMaster.people" class="member">
+                  <div class="profile-detail" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="scrumMaster.people" jqyoui-draggable="{index: {{$index}}, placeholder:true, onStart:'startCallback(SM, , $index)'}">
+                    <img class="member-image" ng-src="{{SM.profileURL}}" alt="" width="85" height="85">
+                    <p class="username text-center bg-green text-white">@{{SM.displayName}}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="m-t-20 roles">
+      <tabset>
+        <tab ng-repeat="item_devTeam in devTeams" heading="{{item_devTeam.name}} - {{item_devTeam.people.length}}" active="tab.active" ng-click="focusDevTeam(item_devTeam)" ng-dblclick="modalEdit()">
+          <div class="row">
+            <ul class="drag-drop-area teams col-md-12" data-drop="true" ng-model='item_devTeam.people' data-jqyoui-options="optionTeamPeople" jqyoui-droppable="{multiple:true, onDrop:'dropCallback(item_devTeam)'}" style="padding: 0;">
+              <li ng-repeat="dev in item_devTeam.people" class="member">
+                <div class="profile-detail" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="item_devTeam.people" jqyoui-draggable="{index: {{$index}}, placeholder:true, onStart:'startCallback(dev)'}">
+                  <img class="member-image" ng-src="{{dev.profileURL}}" alt="" width="85" height="85">
+                  <p class="username text-center bg-green text-white">@{{dev.displayName}}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </tab>
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;" ng-click="modalNew()">New Team</a>
+        </li>
+      </tabset>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="grid simple roles">
+      <div class="grid-title no-border bg-light-grey">
+        <h4><i class="fa fa-users">&ensp;</i>Members</h4>
+      </div>
+      <div class="grid-body no-border no-padding">
+        <!--         <ui-select on-select="addMemberToProject($item)" ng-model="listFreeMember.members.selected" theme="select2" search-enabled="searchEnabled" style="width: 100%;">
+          <ui-select-match placeholder="Type search member">{{$select.selected.displayName}}</ui-select-match>
+          <ui-select-choices repeat="member in listFreeMember.members | props: {displayName: $select.search}" refresh="freeMembers($select.search)" refresh-delay="3">
+            <div class="user-icon pull-left">
+              <img src="assets/img/notification-alert.png" alt="" width="85" height="85">
+            </div>
+            <div class="pull-left" style="width: 80%;">
+              <p class="semi-bold">@<span ng-bind-html="member.displayName | highlight: $select.search"></span>
+              </p>
+              <p><small>email: <span ng-bind-html="''+member.email | highlight: $select.search"></span></small>
+              </p>
+            </div>
+          </ui-select-choices>
+        </ui-select> -->
+        <div class="row">
+          <ul class="drag-drop-area members m-t-15 col-md-12" data-drop="true" ng-model='project_member.people' data-jqyoui-options="optionPeople" jqyoui-droppable="{multiple:true, onDrop:'dropRemoveTeamMember'}">
+            <li ng-repeat="member in project_member.people" class="member">
+              <div class="member-details" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="project_member.people" jqyoui-draggable="{index: {{$index}}, placeholder:true, onStart:'startCallback(member)'}">
+                <img class="member-image" ng-src="{{member.profileURL}}" alt="" width="85" height="85">
+                <p class="username text-center bg-green text-white">@{{member.displayName}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

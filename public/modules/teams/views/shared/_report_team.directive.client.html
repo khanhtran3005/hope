@@ -1,0 +1,124 @@
+<div class="row report-team">
+  <div class="col-md-12">
+    <h4 class="normal">Members:</h4>
+    <ul class="my-friends">
+      <li ng-repeat="member in data.team.people">
+        <div class="profile-pic">
+          <img width="35" height="35" src="{{member.profileURL}}" alt="">
+        </div>
+      </li>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+  <div class="col-md-12">
+    <h4 class="normal">Total:</h4>
+    <ol class="bold">
+      <li><span class="normal">Sprint time: {{sumTimeSprint()}} hours</span>
+      </li>
+      <li><span class="normal">Backlogs: {{sumPointLBacklogs()}} points - {{sumTimeBacklogs()}} hours</span>
+      </li>
+      <li ng-if="data.team.people.length > 0"><span class="normal">Point/person: {{sumPointLBacklogs()/data.team.people.length | number: 1}} points</span>
+      </li>
+    </ol>
+  </div>
+  <div class="col-md-12">
+    <h4 class="normal">Sprint: </h4>
+    <div class="panel-group" id="accordion-{{data.team._id}}" data-toggle="collapse">
+      <div class="panel panel-default" ng-repeat="sprint in data.sprints">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a class="" data-toggle="collapse" data-parent="#accordion-{{data.team._id}}" href="#collapse-{{sprint._id}}-{{data.team._id}}">
+            {{sprint.name}} | Start date: {{sprint.startDate | date:'mediumDate'}} ==> End date: {{sprint.endDate | date:'mediumDate'}} | Time: {{sprint.time_hour}} hours | Completed Backlog: {{getBacklogCompleted(data.backlogs, sprint).length}} | Uncomplete Backlog: {{getBacklogUncompleted(data.backlogs, sprint).length}} 
+          </a>
+          </h4>
+        </div>
+        <div id="collapse-{{sprint._id}}-{{data.team._id}}" class="panel-collapse in">
+          <div class="panel-body">
+            <p>{{sprint.description}}</p>
+            <div class="row">
+              <div class="col-md-12">
+                <span><b>Total estimaste of sprint, backlog, task:</b></span>
+                <nvd3-multi-bar-horizontal-chart id="sprint-{{data.team._id}}" data="getDataTimeSprint(data.backlogs, sprint)" showXAxis="true" showYAxis="true" showValues="true" delay="2400">
+                  <svg></svg>
+                </nvd3-multi-bar-horizontal-chart>
+              </div>
+              <div class="col-md-6">
+                <span><b>Backlog:</b></span>
+                <nvd3-pie-chart data="getDataTimeBacklog(data.backlogs, sprint)" id="backlog-{{data.team._id}}" x="xFunction()" y="yFunction()" width="300" height="300" showLegend="true" objectEquality="true" delay="2400" showLabels="true" labelType="value">
+                  <svg style="height: 240px;"></svg>
+                </nvd3-pie-chart>
+              </div>
+              <div class="col-md-6">
+                <span><b>Task:</b></span>
+                <nvd3-pie-chart data="getDataTimeTask(data.backlogs, sprint)" id="task-{{data.team._id}}" x="xFunction()" y="yFunction()" width="300" height="300" showLegend="true" objectEquality="true" delay="2400" showLabels="true" labelType="value">
+                  <svg style="height: 240px;"></svg>
+                </nvd3-pie-chart>
+              </div>
+            </div>
+            <h4 class="normal">Backlogs: </h4>
+            <div class="panel-group" id="accordion-{{sprint._id}}-{{data.team._id}}" data-toggle="collapse">
+              <div class="panel panel-default" ng-repeat="backlog in data.backlogs | filter: { sprint: { _id: sprint._id.toString()} }">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                <a class="" data-toggle="collapse" data-parent="#accordion-{{sprint._id}}-{{data.team._id}}" href="#collapse-{{sprint._id}}-{{data.team._id}}-{{backlog._id}}">
+                  {{backlog.name}} | Point: {{backlog.point}} | Time: {{backlog.hours}} | Type: {{backlog.backlog_type}} | Status: {{backlog.backlog_status}} | Estimate: {{backlog.pestimate}} hours | Completed: {{backlog.premaining}} hours | Done: {{backlog.accept}}
+                </a>
+                </h4>
+                </div>
+                <div id="collapse-{{sprint._id}}-{{data.team._id}}-{{backlog._id}}" class="panel-collapse in">
+                  <div class="panel-body">
+                    <p>{{backlog.desc}}</p>
+                    <div ng-show="backlog.tasks.length > 0">
+                      <h4 class="normal">Tasks: </h4>
+                      <ol class="bold">
+                        <li ng-repeat="task in backlog.tasks"><span class="normal">{{task.name}} | Status: {{task.task_status}} | Estimate: {{task.compute_estimate}} hours - Completed: {{task.compute_remaining}} hours</span>
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+        <a class="" data-toggle="collapse" data-parent="#accordion-{{data.team._id}}" href="#collapse-not-{{data.team._id}}">
+          Not in sprint
+        </a>
+        </h4>
+        </div>
+        <div id="collapse-not-{{data.team._id}}" class="panel-collapse">
+          <div class="panel-body">
+            <h4 class="normal">Backlogs: </h4>
+            <div class="panel-group" id="accordion-not-sprint-{{data.team._id}}" data-toggle="collapse">
+              <div class="panel panel-default" ng-repeat="backlog in data.backlogs | filter: { sprint:  '!' }">
+                <div class="panel-heading">
+                  <h4 class="panel-title">
+                <a class="" data-toggle="collapse" data-parent="#accordion-not-sprint-{{data.team._id}}" href="#collapse-not-sprint-{{data.team._id}}-{{backlog._id}}">
+                  {{backlog.name}} | Point: {{backlog.point}} | Time: {{backlog.hours}} | Type: {{backlog.backlog_type}} | Status: {{backlog.backlog_status}} | Estimate: {{backlog.pestimate}} hours | Completed: {{backlog.premaining}} hours | Done: {{backlog.accept}}
+                </a>
+                </h4>
+                </div>
+                <div id="collapse-not-sprint-{{data.team._id}}-{{backlog._id}}" class="panel-collapse in">
+                  <div class="panel-body">
+                    <p>{{backlog.desc}}</p>
+                    <div ng-show="backlog.tasks.length > 0">
+                      <h4 class="normal">Tasks: </h4>
+                      <ol class="bold">
+                        <li ng-repeat="task in backlog.tasks"><span class="normal">{{task.name}} | Estimate: {{task.compute_estimate}} hours - Completed: {{task.compute_remaining}} hours</span>
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

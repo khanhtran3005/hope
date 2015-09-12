@@ -1,0 +1,47 @@
+<div id="sidr" class="chat-window-wrapper" ng-controller="ChatsController">
+    <div id="main-chat-wrapper">
+        <div class="chat-window-wrapper fadeIn" id="chat-users">
+            <div class="side-widget">
+                <div class="side-widget-title" ng-init="friendListFunc()">friends</div>
+                <div class="side-widget-content" id="friends-list">
+                    <div class="user-details-wrapper" ng-repeat="friend in friendList track by $index" ng-click="changeParticipant(friend._id)" data-chat-status="{{(friend.socketId && friend.socketId !== '')? 'online': 'busy'}}" data-chat-user-pic="assets/img/profiles/d.jpg" data-chat-user-pic-retina="assets/img/profiles/d2x.jpg" data-user-name="{{friend.displayName}}" data-user-id="{{friend._id}}">
+                        <div class="user-profile">
+                            <img ng-src="{{friend.profileURL}}" width="35" height="35">
+                        </div>
+                        <div class="user-details">
+                            <div class="user-name">
+                                {{friend.displayName}}
+                            </div>
+                            <div class="user-more">
+                                {{friend.lastMessage}}
+                            </div>
+                        </div>
+                        <div class="user-details-status-wrapper">
+
+                        </div>
+                        <div class="user-details-count-wrapper">
+                            <div class="status-icon" ng-class="friend.socketId && friend.socketId !== '' ? 'green'  : 'red'"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-window-wrapper fadeIn" id="messages-wrapper" style="display:none">
+            <div class="clearfix"></div>
+            <div class="chat-messages-header">
+                <div class="status"></div>
+                <span class="semi-bold" ng-bind="typing"></span>
+                <a href="javascript:;" class="chat-back"><i class="fa fa-close"></i></a>
+            </div>
+            <div class="chat-messages">
+
+            </div>
+        </div>
+        <div class="chat-input-wrapper" style="display:none">
+            <textarea id="chat-message-input" rows="1" placeholder="Type your message"></textarea>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<section class="row" data-ng-controller="ReportMemberController" data-ng-init="findOne()">
+  <div class="col-md-12">
+    <div class="grid simple ">
+      <div class="grid-title no-border" style="background: #00924E;">
+        <center style="font-weight: bolder; font-size: 16px;">
+          <span ng-if="data.user.displayName"> {{data.user.displayName}}</span>
+          <span ng-if="data.user.email"> - Email: {{data.user.email}}</span>
+          <span ng-if="data.user.skype"> - Skype: {{data.user.skype}}</span>
+          <span ng-if="data.user.phone"> - Phone: {{data.user.phone}}</span>
+        </center>
+      </div>
+      <div class="grid-body no-border">
+        <ol class="bold" style="margin-top: 30px;">
+          <li ng-repeat="sprint in data.sprints">
+            <span class="normal"><span class="bold">Sprint:</span> {{sprint.name}} | Start date: {{sprint.startDate | date:'mediumDate'}} ==> End date: {{sprint.endDate | date:'mediumDate'}} | Hours: {{sprint.time_hour}} hours</span>
+            <br>
+            <span class="bold">Backlogs:</span>
+            <ol type="a">
+              <li ng-repeat="backlog in data.backlogs | filter: { sprint: { _id: sprint._id.toString()} }"><span class="normal">{{backlog.name}} | Point: {{backlog.point}} | Hours: {{backlog.hours}} | Type: {{backlog.backlog_type}} | Status: {{backlog.backlog_status}} | Estimate: {{backlog.pestimate}} hours | Complete: {{backlog.premaining}} hours | Done: {{backlog.accept}}</span>
+                <br>
+                <div ng-if="backlog.tasks.length > 0">
+                  <span class="bold">Tasks:</span>
+                  <ul>
+                    <li ng-repeat="task in backlog.tasks"><span class="normal">{{task.name}} | Status: {{task.task_status}} | Estimate: {{task.compute_estimate}} hours - Complete: {{task.compute_remaining}} hours</span>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ol>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>

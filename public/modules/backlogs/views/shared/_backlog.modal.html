@@ -1,0 +1,168 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" data-ng-click="cancel()">
+    <span aria-hidden="true">&times;</span>
+    <span class="sr-only">Close</span>
+  </button>
+  <h4 class="modal-title" style="text-transform: uppercase">Backlog</h4>
+</div>
+<div class="modal-body project-modal" data-ng-init="show()">
+  <div class="row">
+    <div class="grid simple vertical red">
+      <div class="grid-body no-border">
+        <div class="row-fluid">
+          <div class="row">
+            <label class="col-xs-2" for="name">Name</label>
+            <div class="col-xs-10">
+              <input type="text" class="form-control" id="name" placeholder="Name" data-ng-model="backlog.name">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-xs-12" for="description">Description</label>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <textarea class="form-control" id="description" rows="2" style="resize: none;" data-ng-model="backlog.desc"></textarea>
+            </div>
+          </div>
+          <div class="row backlog-estimate" ng-if="!isNew">
+            <label class="col-xs-2">Difficulty</label>
+            <div class="col-xs-3">
+              <span><ng-pluralize count="backlog.point" when="{'0': 'Point', '1': 'Point', 'other': 'Points'}"></ng-pluralize></span>
+              <input type="number" class="form-control backlog-estimate-input" placeholder="Point" data-ng-model="backlog.point">
+            </div>
+            <div class="col-xs-3" ng-if="!isNew">
+              <span><ng-pluralize count="hours" when="{'0': 'Hour', '1': 'Hour', 'other': 'Hours'}"></ng-pluralize></span>
+              <input type="text" class="form-control backlog-estimate-input" placeholder="Hours" value="{{hours}}" disabled>
+            </div>
+            <div class="col-xs-3">
+              <span>Type</span>
+              <select type="text" class="backlog-estimate-input" data-ng-model="backlog.backlog_type" ng-options="k as v for (k,v) in backlog_types">
+              </select>
+            </div>
+          </div>
+          <div class="row backlog-estimate">
+            <label class="col-xs-2" for="assigned_to">Assigned to team</label>
+            <div class="col-xs-6">
+              <select class=" backlog-estimate-input" style="width: 161px" id="assigned_to" placeholder="Assigned to team" data-ng-model="backlog.assignee">
+                <option value="deleted">Unassign</option>
+                <option ng-repeat="team in develop_teams" value="{{team}}" ng-selected="{{backlog.assignee._id === team._id}}">{{team.name}} - {{team.people.length}}</option>
+              </select>
+            </div>
+            <div class="col-xs-3" ng-if="!isNew">
+              <span>Creator</span>
+              <input type="text" class="form-control backlog-estimate-input" placeholder="Name" value="{{backlog.user.displayName}}" disabled>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid simple vertical purple" ng-if="!isNew">
+      <div class="grid-body no-border">
+        <div class="row-fluid">
+          <div class="row">
+            <label class="col-xs-2" for="status">Status</label>
+            <div class="col-xs-3">
+              <select placeholder="Creator" data-ng-model="backlog.backlog_status" ng-options="k as v for (k,v) in backlog_status">
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-xs-2" for="total_estimate">Total estimate</label>
+            <div class="col-xs-3">
+              <input type="text" class="form-control" placeholder="Total estimate" value="{{backlog.pestimate}}" disabled="disabled">
+            </div>
+            <label class="col-md-1 col-xs-2" for="completed">Completed</label>
+            <div class="col-xs-3">
+              <input type="text" class="form-control" placeholder="Completed" value="{{backlog.premaining}}" disabled="disabled">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-7 col-xs-8 -2 col-xs-offset-2">
+              <div class="progress progress-striped active progress-large" style="height: 20px; margin-bottom: 0px;">
+                <div data-percentage="0%" style="width: {{backlog.process_percent}}%;" class="progress-bar progress-bar-success"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row" ng-hide="hours_team === -1">
+            <label class="col-xs-2" for="total_estimate">Time x members</label>
+            <div class="col-xs-3">
+              <input type="text" class="form-control" placeholder="Estimate" value="{{hours_team}}" disabled="disabled">
+            </div>
+            <div class="col-xs-5 text-warning" ng-show="backlog.pestimate > hours_team && hours_team !== -1">
+             Tasks to do are larger than team's working time
+            </div>
+          </div>
+          <div class="row" ng-if="showSprint">
+            <label class="col-xs-2" for="sprint">In Sprint</label>
+            <div class="col-xs-3">
+              <input type="text" class="form-control" value="{{backlog.sprint.name}}" disabled="disabled">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid simple vertical green" ng-if="showTask">
+      <div class="grid-title no-border">
+        <h4>
+        <span class="semi-bold">Tasks</span>
+                </h4>
+        <div class="tools">
+          <a href="javascript:;" class="collapse"></a>
+        </div>
+      </div>
+      <div class="grid-body no-border">
+        <div ng-include src="'modules/tasks/views/list-tasks.client.view.html'"></div>
+      </div>
+    </div>
+    <div class="grid simple vertical purple" ng-hide="isNew">
+      <div class="grid-title no-border">
+        <h4>
+          <span class="semi-bold">Attachment</span>
+        </h4>
+        <div class="tools">
+          <a href="javascript:;" class="expand"></a>
+        </div>
+      </div>
+      <div class="grid-body no-border" style="overflow: hidden; display: none;">
+        <div class="row-fluid">
+          <div ng-include src="'modules/resources/views/list-resources.client.view.html'"></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid simple vertical blue" ng-if="!isNew">
+      <div class="grid-title no-border">
+        <h4>
+          <span class="semi-bold">Comment</span>
+        </h4>
+        <div class="tools">
+          <a href="javascript:;" class="expand"></a>
+        </div>
+      </div>
+      <div class="grid-body no-border" style="overflow: hidden; display: none;">
+        <div class="row-fluid">
+          <div ng-include src="'modules/comments/views/share/_comment.box.html'"></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid simple vertical green" ng-hide="isNew">
+      <div class="grid-title no-border">
+        <h4>
+          <span class="semi-bold">History</span>
+        </h4>
+        <div class="tools">
+          <a href="javascript:;" class="expand"></a>
+        </div>
+      </div>
+      <div class="grid-body no-border" style="overflow: hidden; display: none;">
+        <div class="row-fluid">
+          <div ng-include src="'modules/audits/views/list-audits.client.view.html'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" data-ng-click="remove()" ng-if="!isNew">Delete</button>
+  <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="save()">Save</button>
+  <button type="button" class="btn btn-default" data-ng-click="cancel()">Close</button>
+</div>

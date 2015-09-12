@@ -1,0 +1,120 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" data-ng-click="cancel()">
+    <span aria-hidden="true">&times;</span>
+    <span class="sr-only" ng-click="cancel()">Close</span>
+  </button>
+  <h4 class="modal-title" style="text-transform: uppercase">Task</h4>
+</div>
+<div class="modal-body project-modal" data-ng-init="show()">
+  <div class="row">
+    <div class="grid simple vertical red">
+      <div class="grid-body no-border">
+        <div class="row-fluid">
+          <div class="row">
+            <label class="col-xs-2" for="name">Name</label>
+            <div class="col-xs-10">
+              <input type="text" class="form-control" id="name" placeholder="Name" data-ng-model="task.name">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-xs-12" for="description">Description</label>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <textarea class="form-control" id="description" rows="2" style="resize: none;" data-ng-model="task.desc"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-xs-2" for="assigned_to">Assigned to</label>
+            <div class="col-xs-6">
+              <select type="text" class=" task-estimate-input" id="assigned_to" placeholder="Assignee" data-ng-model="task.assignee">
+                <option value="delete">Unassign</option>
+                <option ng-repeat="member in team.people" value="{{member._id}}" ng-selected="{{task.assignee._id === member._id}}">{{member.displayName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid simple vertical green">
+      <div class="grid-body no-border">
+        <div class="row-fluid">
+          <div class="row">
+            <label class="col-xs-2" for="status">Status</label>
+            <div class="col-xs-6">
+              <select type="text" placeholder="Creator" data-ng-model="task.task_status" ng-options="k as v for (k,v) in task_status">
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-xs-2" for="total_estimate">Estimate</label>
+            <div class="col-xs-3">
+              <input type="number" class="form-control" data-ng-model="task.estimate">
+            </div>
+            <label class="col-xs-2">Completed</label>
+            <div class="col-xs-3">
+              <input type="number" class="form-control pull-right" data-ng-model="task.remaining" ng-disabled="isDisabledRemaining">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+              <div class="progress progress-striped active progress-large" style="height: 20px; margin-bottom: 0px;">
+                <div data-percentage="0%" style="width: {{task.work_percent}}%;" class="progress-bar progress-bar-warning"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid simple vertical purple" ng-hide="isNew">
+      <div class="grid-title no-border">
+        <h4>
+          <span class="semi-bold">Attachment</span>
+        </h4>
+        <div class="tools">
+          <a href="javascript:;" class="expand"></a>
+        </div>
+      </div>
+      <div class="grid-body no-border" style="overflow: hidden; display: none;">
+        <div class="row-fluid">
+          <div ng-include src="'modules/resources/views/list-resources.client.view.html'"></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid simple vertical blue" ng-hide="isNew">
+      <div class="grid-title no-border">
+        <h4>
+          <span class="semi-bold">Comment</span>
+        </h4>
+        <div class="tools">
+          <a href="javascript:;" class="expand"></a>
+        </div>
+      </div>
+      <div class="grid-body no-border" style="overflow: hidden; display: none;">
+        <div class="row-fluid">
+          <div ng-include src="'modules/comments/views/share/_comment.box.html'"></div>
+        </div>
+      </div>
+    </div>
+    <div class="grid simple vertical green" ng-hide="isNew">
+      <div class="grid-title no-border">
+        <h4>
+          <span class="semi-bold">History</span>
+        </h4>
+        <div class="tools">
+          <a href="javascript:;" class="expand"></a>
+        </div>
+      </div>
+      <div class="grid-body no-border" style="overflow: hidden; display: none;">
+        <div class="row-fluid">
+          <div ng-include src="'modules/audits/views/list-audits.client.view.html'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" data-ng-click="remove()" ng-if="!isNew">Delete</button>
+  <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="save()">Save</button>
+  <button type="button" class="btn btn-default" data-ng-click="cancel()">Close</button>
+</div>

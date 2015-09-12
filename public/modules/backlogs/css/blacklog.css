@@ -1,0 +1,18 @@
+.backlog-estimate span {
+  float: left;
+  margin-right: 8px;
+  display: block;
+  padding-top: 10px;
+}
+.backlog-estimate .backlog-estimate-input {
+  width: 95px;
+  height: 37px !important;
+  float: left;
+  border-radius: 0;
+}
+.backlogs-list-item {
+  margin-bottom: 5px;
+}
+.backlogs-list-item .grid-body {
+  padding: 10px !important;
+}

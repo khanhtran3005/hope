@@ -1,0 +1,71 @@
+<section data-ng-controller="MeetingsController" data-ng-init="findOne()">
+    <div class="col-md-12">
+        <div class="grid simple">
+            <div class="grid-title no-border col-md-12">
+                <div class="col-md-10">
+                    <h3>Meeting:
+                        <span class="semi-bold" ng-bind="meeting.name"></span>
+                    </h3>
+                    <p>Time-box: <span class="timebox label label-important" ng-bind="timebox"></span>
+                    </p>
+                    <p>
+                        <small>on: {{meeting.startDate | date: 'mediumDate'}}</small>
+                        <small ng-if="meeting.endDate">to: {{meeting.endDate | date: 'mediumDate'}}</small>
+                    </p>
+                    <blockquote class="margin-top-20" ng-bind="sprint.description">
+                    </blockquote>
+                    <p id="uploading" class="text-right"> <img src="/assets/img/uploading.gif" alt="">Uploading...</p>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <livestream></livestream>
+
+                        <hr>
+                        <div class="form-group" id="recorded-videos">
+                            <div id="replay" style="display: none;">
+                                <video controls></video>
+                                <hr>
+                            </div>
+                            <label for="">Recorded videos</label>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="recorded in meeting.recordedVideos" ng-click="playrecorded(recorded.URL, $event)">
+                                        <div class=" col-md-12 notification-messages info">
+                                        <a href="javascript:;" class="del-recorded" ng-click="delRecorded(recorded._id)" ng-show="recorded.user._id == user._id"><i class="fa fa-trash"></i></a>
+                                            <div class="message-wrapper">
+                                                <div class="heading">{{recorded.title}}</div>
+                                                <div class="description">
+                                                <span>At: {{recorded.created | date: 'medium'}}</span>
+                                                <br>
+                                                <span>By: {{recorded.user.displayName}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label class="form-label">Meeting report</label>
+                            <!-- <span class="help">Sumarize conference content here</span> -->
+                            <div class="controls">
+                                <wysiwyg textarea-class="form-control" textarea-height="200px" textarea-name="textareaQuestion" ng-model="meeting.report" ng-change="reportChanged()" enable-bootstrap-title="true" textarea-menu="{{wysiwygCustomMenu}}"></wysiwyg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pull-left m-l-15">
+                        <small ng-bind="typing"></small>
+                    </div>
+                    <div class="pull-right m-r-15">
+                        <span class="text-success m-r-15" ng-bind="message"></span>
+                        <button type="button" class="btn btn-primary" ng-click="update()">Save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="clear-fix"> </div>
+    </div>
+</section>

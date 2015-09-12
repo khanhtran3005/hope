@@ -1,0 +1,39 @@
+<section data-ng-controller="ProjectsController" data-ng-init="find()">
+    <div class="row">
+        <button type="button" class="btn btn-block btn-info" data-ng-click="modalNew()">
+            <span class="bold">Create new project</span>
+        </button>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-vlg-3 col-sm-6" ng-repeat="_project in projects" ng-click="show(_project._id)">
+            <div class="tiles added-margin m-b-20" ng-class="getBgClass($index)">
+                <div class="tiles-body">
+                    <div class="tiles-title text-black all-caps large-text" >{{_project.name}}</div>
+                    <p><small>{{_project.created | date:'mediumDate'}}</small></p>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Members</span> <span class="item-count animate-number semi-bold">{{_project.people.length}}</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats">
+                        <div class="wrapper transparent">
+                            <span class="item-title">Sprints</span> <span class="item-count animate-number semi-bold">{{_project.sprints.length}}</span>
+                        </div>
+                    </div>
+                    <div class="widget-stats ">
+                        <div class="wrapper last">
+                            <span class="item-title">Backlogs</span> <span class="item-count animate-number semi-bold">{{_project.backlogs.length}}</span>
+                        </div>
+                    </div>
+                    <div class="description" ng-if="_project.description.trim() == ''">No description...</div>
+                    <div class="description" ng-if="_project.description.trim() != ''">{{_project.description}}</span>
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+<script type="text/javascript">
+var focus = "";
+</script>

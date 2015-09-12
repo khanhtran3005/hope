@@ -1,0 +1,65 @@
+<section class="row" data-ng-controller="AuthenticationController">
+                <div class="login clearfix">
+                    <div class="logo">
+                        <a href="/#!/">
+                            <img src="assets/img/logo.png" alt="logo hope" height="90px">
+                        </a>
+                    </div>
+                    <div class="content">
+                        <!-- BEGIN LOGIN FORM -->
+                        <form class="login-form" data-ng-submit="signin()" autocomplete="off">
+                            <h3 class="form-title">Login to your account</h3>
+                            <div class="form-group">
+                                <label class="control-label visible-ie8 visible-ie9">Username</label>
+                                <div class="input-icon">
+                                    <i class="fa fa-user"></i>
+                                    <input class="form-control placeholder-no-fix" type="text" data-ng-model="credentials.username" placeholder="Username" name="username">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label visible-ie8 visible-ie9">Password</label>
+                                <div class="input-icon">
+                                    <i class="fa fa-lock"></i>
+                                    <input class="form-control placeholder-no-fix" type="password" data-ng-model="credentials.password" placeholder="Password" name="password">
+                                </div>
+                            </div>
+                            <div class="form-group alert alert-danger help-block" data-ng-show="error" class="text-center text-danger"><strong data-ng-bind="error"></strong></div>
+                            <div class="form-actions clearfix">
+                                <button type="submit" class="btn green pull-right">
+                                    Login <i class="m-icon-swapright m-icon-white"></i>
+                                </button>
+                            </div>
+                            <div class="login-options">
+                                <h4>Or login with</h4>
+                                <ul class="social-icons">
+                                    <li>
+                                        <a class="facebook" data-original-title="facebook" href="/auth/facebook">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="twitter" data-original-title="Twitter" href="/auth/twitter">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="googleplus" data-original-title="Goole Plus" href="/auth/google">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="forget-password">
+                                <h4>Forgot your password ?</h4>
+                                <p>no worries, click <a ui-sref="forgot" id="forget-password">here </a> to reset your password.</p>
+                            </div>
+                            <div class="create-account">
+                                <p>Don't have an account yet ?&nbsp; <a ui-sref="signup" id="register-btn">Create an account </a>
+                                </p>
+                            </div>
+
+                        </form>
+                        <!-- END LOGIN FORM -->
+                    </div>
+                    <div class="copyright">
+                        2014 © KT project.
+                    </div>
+                </div>
+            </section>

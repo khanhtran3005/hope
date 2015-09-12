@@ -1,0 +1,13 @@
+<div class="grid simple roles">
+  <div class="grid-title no-border bg-light-grey">
+    <h4><span class="glyphicon glyphicon-flag">&ensp;</span>{{ngTitle}}</h4>
+  </div>
+  <ul class="grid-body no-border no-padding sprint-backlogs" style="min-height: 75px;" dnd-list="backlogs" dnd-external-sources="true" dnd-external-sources="true" dnd-drop="dropCallback(event, index, item, external, type)">
+    <liv div class="notification-messages info" ng-repeat="backlog in backlogs" dnd-draggable="backlog" dnd-effect-allowed="move" dnd-selected="selected = backlog" dnd-moved="movedCallback($index)" dnd-dragstart="dragStartrCallback(backlog)">
+      <div class="message-wrapper">
+        <div class="heading"> {{backlog.name}}</div>
+        <div class="description"> {{backlog.desc}}</div>
+      </div>
+    </liv>
+  </ul>
+</div>

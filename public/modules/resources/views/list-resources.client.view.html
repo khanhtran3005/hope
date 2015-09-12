@@ -1,0 +1,25 @@
+<section data-ng-controller="ResourcesController" data-ng-init="find()">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="grid simple">
+        <div class="grid-body no-border">
+          <div class="row">
+            <div class="col-md-12">
+              <p class="pull-right">
+                <button class="btn btn-primary" ng-file-select="" ng-model="files" ng-file-change="upload(files)" ng-multiple="true" ng-accept="'image/*,application/pdf'">Choose files</button>
+              </p>
+              <div>
+                <div class="input-group m-t-10" ng-repeat='rs in resources'>
+                  <span class="input-group-addon danger" ng-click='remove(rs)'>          
+                    <i class="fa fa-trash"></i>
+                  </span>
+                  <a class="btn btn-default uploaded-file-name" ng-bind='rs.name' href="{{rs.url}}" download="{{rs.name}}"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

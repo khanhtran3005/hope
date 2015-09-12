@@ -1,0 +1,60 @@
+<section data-ng-controller="MeetingsController as meetingCtrl" ng-init="meetingCtrl.getByProject()">
+    <div class="tiles white">
+        <div class="tiles row tiles-container red no-padding">
+            <div class="col-md-3 tiles red no-padding">
+                <div class="tiles-body no-padding">
+                    <div class="calender-options-wrapper">
+                        <h2 class="text-white" id="calender-current-date">Upcoming events</h2>
+                        <hr>
+                        <div class="events-wrapper">
+
+                            <div class="event" ng-repeat="item in events | filter: greaterThan" ng-click="eventClick($event)">
+                                <p class="semi-bold"><a class="text-white" href="#!/projects/{{$root.currentProject._id}}/meetings/{{item._id}}">{{item.title}}</a></p>
+                                <small>on: {{item.start | date: 'mediumDate'}}</small>
+                                <small ng-if="item.end">to: {{item.end | date: 'mediumDate'}}</small>
+                            </div>
+                           <!--  <div class="event">
+                                <p class="semi-bold">My Event 1</p>
+                                <small>on: sdf df dafdsf fdafs</small>
+                            </div>
+                            <div class="event">
+                                <p class="semi-bold">My Event 1</p>
+                                <small>on: sdf df dafdsf fdafs</small>
+                            </div>
+                            <div class="event">
+                                <p class="semi-bold">My Event 1</p>
+                                <small>on: sdf df dafdsf fdafs</small>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 tiles white no-padding">
+                <div class="tiles-body">
+                    <div class="pull-left">
+                        <button type="button" class="btn btn-info" title="New event" ng-click="showModal(true)"><i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="pull-right">
+                        <div data-toggle="buttons-radio" class="btn-group">
+                            <button class="btn btn-primary" type="button" ng-click="changeView('month', 'myCalendar')">month</button>
+                            <button class="btn btn-primary active" type="button" ng-click="changeView('agendaWeek', 'myCalendar')">week</button>
+                            <button class="btn btn-primary" type="button" ng-click="changeView('agendaDay', 'myCalendar')">day</button>
+                        </div>
+
+                        <button class="btn btn-success" ng-click="today()">Today</button>
+                        <div class="btn-group ">
+                            <button class="btn btn-success" id="calender-prev" ng-click="prev()"><i class="fa fa-angle-left"></i>
+                            </button>
+                            <button class="btn btn-success" id="calender-next" ng-click="next()"><i class="fa fa-angle-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar"> </div>
+                    <div ng-init="date()"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

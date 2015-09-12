@@ -1,0 +1,37 @@
+<div data-ng-controller="CommentsController" data-ng-init="find()">
+    <div class="col-md-12 no-padding">
+        <div class="col-md-10 .col-xs-10 m-b-5">
+            <textarea name="contents" id="form1Amount" class="form-control" ng-model="comment.content" placeholder="contents..."></textarea>
+            <input type="hidden" name="sprintId" value="{{sprint._id}}">
+        </div>
+        <div class="pull-right col-md-2 .col-xs-2">
+            <button class="btn btn-primary btn-cons" ng-click="create()">Send</button>
+        </div>
+    </div>
+    <!-- <div class="tiles white">
+        <textarea rows="2" class="form-control user-status-box comment-input" placeholder="Whats on your mind?" style="resize: none; background-color: #f4f5f7;" ng-model="comment.content"></textarea>
+    </div>
+    <div class="tiles grey padding-10">
+        <div class="pull-right">
+            <button class="btn btn-primary btn-sm btn-small" type="button" ng-click="create()">POST</button>
+        </div>
+        <div class="clearfix"></div>
+    </div> -->
+<!-- </div> -->
+<div class="grid-body no-border">
+    <div class="row-fluid">
+        <div class="scroller" data-height="220px" data-always-visible="0">
+            <div class="row comment" ng-repeat="comment in comments" ng-class="{'cmt-owner': authentication.user._id == comment.user._id, 'cmt-other': authentication.user._id != comment.user._id}">
+                <div class="col-md-12">
+                    <div class="grid simple vertical">
+                        <p class="display-name">@{{comment.user.displayName}}</p>
+                        <p class="cmt-content" ng-bind="comment.content"></p>
+                        <p class="created-at"><small><time ng-bind="comment.createdAt | timeago">20/12/2012</time></small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

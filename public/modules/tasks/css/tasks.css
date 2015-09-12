@@ -1,0 +1,23 @@
+.tasks-m-b-5 {
+  margin-bottom: 5px;
+}
+.tasks-bar {
+  float: left;
+  margin-right: 12px;
+}
+.tasks-bar-percent {
+  float: left;
+}
+.task-highlight {
+  background-color: #F5F5F5;
+  min-height: 202px;
+  padding: 5px;
+}
+.tasks-user-comment-wrapper {
+  padding: 0;
+}
+.task-bt-modal-footer {
+  background-color: #FFFFFF;
+  margin: 0 -20px 0 -20px;
+  border-top: #E5E9EC solid 1px;
+}

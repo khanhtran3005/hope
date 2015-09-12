@@ -1,0 +1,84 @@
+<section data-ng-controller="BacklogsController" data-ng-init="find()">
+  <button type="button" class="btn btn-block btn-info" data-ng-click="modalNew()">
+    <span class="bold">Create a Backlog</span>
+  </button>
+  <div class="grid simple m-b-5 backlogs">
+    <div class="grid-body no-border no-padding">
+      <div class="row-fluid heading">
+        <div class="col-sm-5">
+          <div class="row">
+            <div class="col-xs-6 p-l-28">
+              <strong>Backlog's name</strong>
+            </div>
+            <div class="col-xs-3">
+              <strong>Type</strong>
+            </div>
+            <div class="col-xs-3">
+              <strong>Status</strong>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-7">
+          <div class="row">
+            <div class="col-xs-3">
+              <strong>Total estimated</strong>
+            </div>
+            <div class="col-xs-2">
+              <strong>Remaining</strong>
+            </div>
+            <div class="col-xs-5">
+              <strong>Progressing</strong>
+            </div>
+            <div class="col-xs-2 done"><strong>Done</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row-fluid" ng-if="!backlogs">
+        <p class="text-warning center-text">There is no backlog right now!</p>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <ul class="backlogs" dnd-list="backlogs" dnd-external-sources="true" dnd-external-sources="true">
+    <li class="grid simple vertical green backlogs-list-item" ng-repeat="backlog_item in backlogs" ng-dblclick="show(backlog_item)" dnd-draggable="backlog_item" dnd-effect-allowed="move" dnd-selected="selected = backlog_item" dnd-moved="movedCallback($index)">
+      <div class="grid-body no-border">
+        <div class="row-fluid ">
+          <div class="col-sm-5">
+            <div class="row">
+              <div class="col-xs-6 pointer" ng-click="show(backlog_item)">
+                <strong>{{backlog_item.name}}</strong>
+              </div>
+              <div class="col-xs-3">
+                <span class="label pull-left" ng-class="backlog_item.backlog_type == 'Bug' ? 'label-inverse' : (backlog_item.backlog_type == 'Feature' ? 'label-info' : (backlog_item.backlog_type == 'Spike' ? 'label-important' : 'label-white'))">{{backlog_item.backlog_type}}</span>
+              </div>
+              <div class="col-xs-3">
+                <p>{{backlog_item.backlog_status}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-7">
+            <div class="row">
+              <div class="col-xs-3">
+                <p>{{backlog_item.pestimate}}</p>
+              </div>
+              <div class="col-xs-2">
+                <p>{{backlog_item.premaining}}</p>
+              </div>
+              <div class="col-xs-6">
+                <div class="progress progress-striped active" style="margin-bottom: 0px;">
+                  <div data-percentage="0%" style="width: {{backlog_item.process_percent}}%;" class="progress-bar progress-bar-primary"></div>
+                </div>
+              </div>
+              <div class="checkbox check-success col-xs-1">
+                <input id="{{backlog_item._id}}" type="checkbox" value="1" ng-model='backlog_item.accept' >
+                <label for="{{backlog_item._id}}" style="top: -8px;" ng-click='backlogAccept(backlog_item)'></label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </li>
+  </ul>
+</section>

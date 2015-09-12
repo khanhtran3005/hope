@@ -1,0 +1,19 @@
+<section class="row" data-ng-controller="ReportTeamController" data-ng-init="find()">
+  <div class="col-md-12" ng-repeat="team in teams" style="margin-bottom: 15px;">
+    <div class="grid simple ">
+      <div class="grid-title no-border">
+        <h4>Team: {{team.name}}</h4>
+        <div class="tools">
+          <!-- <a href="javascript:window.print();">Print</a> -->
+          <a href="javascript:;" class="collapse"></a>
+        </div>
+      </div>
+      <div class="grid-body no-border">
+        <div class="row-fluid">
+          <p>{{team.desc}}</p>
+          <rp-team ng-project='{{team.project}}' ng-team='{{team._id}}'></rp-team>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

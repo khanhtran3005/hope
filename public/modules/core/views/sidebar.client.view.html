@@ -1,0 +1,131 @@
+<div ng-controller="HeaderController as header" ng-init="countProject()" class="page-sidebar" id="main-menu">
+  <!-- BEGIN MINI-PROFILE -->
+  <div class="page-sidebar-wrapper" id="main-menu-wrapper">
+    <div class="user-info-wrapper">
+      <div class="profile-wrapper">
+        <img ng-src="{{user.profileURL}}" width="69" height="69" />
+      </div>
+      <div class="user-info">
+        <div class="greeting">Welcome</div>
+        <div class="username">
+          <span class="semi-bold">{{header.user.firstName}}</span> {{header.user.lastName}}</div>
+        <div class="status">Status
+          <a href="#">
+            <div class="status-icon green"></div>Online</a>
+        </div>
+      </div>
+    </div>
+    <!-- END MINI-PROFILE -->
+
+    <!-- BEGIN SIDEBAR MENU -->
+    <div class="separate"></div>
+
+    <ul>
+      <li class="current-project">
+        <ui-select on-select="selected($item, $model)" ng-model="projects.selected" theme="select2" ng-disabled="disabled" search-enabled="searchEnabled" style="width: 230px;">
+          <ui-select-match placeholder="Select or type search project">{{$select.selected.name}}</ui-select-match>
+          <ui-select-choices repeat="project in projects | props: {name: $select.search}" class="text-left">
+            <div class="semi-bold" ng-bind-html="project.name | highlight: $select.search"></div>
+            <small ng-show="project.description">
+                                    <!-- email: {{projects.email}} -->
+                                    desc: <span ng-bind-html="''+project.description | highlight: $select.search"></span>
+                                    </small>
+          </ui-select-choices>
+        </ui-select>
+      </li>
+      <li>
+        <a data-ui-sref="home"> <i class="fa fa-tachometer"></i>
+          <span class="title">Dashboard</span>
+          <!-- <span class="badge badge-important pull-right">5</span> -->
+        </a>
+      </li>
+      <li>
+        <a data-ui-sref="listProjects"> <i class="fa fa-briefcase"></i>
+          <span class="title">Project</span>
+          <span class=" badge badge-disable pull-right">{{header.totalProject}}</span>
+        </a>
+      </li>
+      <li ui-sref-active="active" ng-show="$root.currentProject">
+        <a href="javascript:;" ng-click="header.sidebar($event)"> <i class="fa fa-users"></i>
+          <span class="title">Teams</span>
+          <span class="arrow "></span>
+        </a>
+        <ul class="sub-menu">
+          <li ui-sref-active="active">
+            <a data-ui-sref="viewProject.teams({ projectId: $root.currentProject._id })"> <i class="fa fa-sitemap"></i>
+              <span class="title">Permission</span>
+            </a>
+          </li>
+
+          <li>
+            <a ui-sref="viewProject.contacts({projectId: $root.currentProjectId})"> <i class="fa fa-info"></i><span class="title">Members' information</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="employees({projectId: $root.currentProjectId})"> <i class="fa fa-plus"></i>
+              <span class="title">Add member</span>
+            </a>
+          </li>
+          <li>
+            <a ui-sref="viewProject.report({projectId: $root.currentProjectId})"> <i class="fa fa-users"></i>
+              <span class="title">Report</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+
+      <li ng-show="$root.currentProject">
+        <a href="javascript:;" ng-click="header.sidebar($event)"> <i class="fa fa-gears"></i>
+          <span class="title">Sprint</span>
+          <span class="arrow "></span>
+        </a>
+        <ul class="sub-menu">
+          <li> <a data-ui-sref="viewProject.listSprints({ projectId: $root.currentProjectId})"> List Sprints </a>
+          </li>
+
+          <li> <a data-ui-sref="viewProject.createSprint({ projectId: $root.currentProjectId})"> Create new Sprint </a>
+          </li>
+        </ul>
+      </li>
+      <li ui-sref-active="active" ng-show="$root.currentProject">
+        <a ui-sref="viewProject.backlogs({projectId: $root.currentProject._id})"> <i class="fa fa-puzzle-piece"></i>
+          <span class="title">Product Backlog</span>
+        </a>
+      </li>
+      <li ui-sref-active="active" ng-show="$root.currentProject">
+        <a ui-sref="viewProject.kanban({projectId: $root.currentProject._id})"> <i class="fa fa-tasks"></i>
+          <span class="title">Tasks</span>
+        </a>
+      </li>
+      <li ui-sref-active="active" ng-show="$root.currentProject">
+        <a data-ui-sref="viewProject.listMeetings({ projectId: $root.currentProject._id })"> <i class="fa fa-calendar"></i>
+          <span class="title">Calendar</span>
+          <!-- <span class="selected"></span> -->
+          <span class="badge badge-primary pull-right">5</span>
+        </a>
+      </li>
+      <!-- <li>
+                <a href="javascript:;" ng-click="header.sidebar($event)"> <i class="fa fa-comment-o"></i>
+                    <span class="title">Employee</span>
+                    <span class="arrow "></span>
+                </a>
+                <ul class="sub-menu">
+                    <li>
+                        <a data-ui-sref="contacts({ projectId: $root.currentProjectId })">
+                            <a ui-sref="contacts({projectId: $root.currentProjectId})"> <i class="fa fa-tasks"></i>
+                                <span class="title">Contacts</span> </a>
+                    </li>
+                    <li>
+                        <a ui-sref="employees({projectId: $root.currentProjectId})"> <i class="fa fa-tasks"></i>
+                            <span class="title">Find employee</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+ -->
+    </ul>
+    <div class="clearfix"></div>
+    <!-- END SIDEBAR MENU -->
+  </div>
+</div>

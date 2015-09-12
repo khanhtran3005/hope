@@ -1,0 +1,15 @@
+<section data-ng-controller="AuditsController" data-ng-init="find()" class="log">
+    <div class="scroller" data-height="220px" data-always-visible="0">
+        <a data-ng-repeat="audit in audits" class="list-group-item">
+            <p><b>{{audit.messages[0]}}</b></p>
+            <ol>
+                <li data-ng-repeat="message in audit.messages" ng-if="$index!=0">{{message}}</li>
+            </ol>
+            <small class="list-group-item-text">At <span data-ng-bind="audit.created | date:'medium'"></span> by @<span data-ng-bind="audit.user.displayName" class="semi-bold"></span></small>
+            <!-- <h4 class="list-group-item-heading" data-ng-bind="audit.name"></h4> -->
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!audits.$resolved || audits.length">
+        No history log
+    </div>
+</section>

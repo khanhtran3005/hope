@@ -1,0 +1,100 @@
+<div data-ng-controller="CommentsController as comments">
+  <div class="col-md-12 no-padding">
+    <div class="tiles white">
+      <textarea rows="3" class="form-control user-status-box post-input" placeholder="Whats on your mind?" style="resize: none; background-color: #f4f5f7;" ng-model="comment.content"></textarea>
+    </div>
+    <div class="tiles grey padding-10">
+      <div class="pull-left">
+        <button class="btn btn-default btn-sm btn-small" type="button"><i class="fa fa-camera"></i>
+        </button>
+        <button class="btn btn-default btn-sm btn-small" type="button"><i class="fa fa-map-marker"></i>
+        </button>
+      </div>
+      <div class="pull-right">
+        <button class="btn btn-primary btn-sm btn-small" type="button" ng-click="create()">POST</button>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <div class="row tiles-container  m-b-20 hidden-xlg">
+    <div class="m-l-10">
+      <div class="tiles white ">
+        <div class="p-t-20 p-b-15 b-b b-grey">
+          <div class="post overlap-left-10">
+            <div class="user-profile-pic-wrapper">
+              <div class="user-profile-pic-2x white-border">
+                <img width="45" height="45" src="assets/img/profiles/avatar.jpg" alt="" data-src="assets/img/profiles/avatar.jpg" data-src-retina="assets/img/profiles/avatar2x.jpg">
+              </div>
+            </div>
+            <div class="info-wrapper small-width inline">
+              <div class="info text-black ">
+                <p>Jane Smith Commented on webarch new year bundle “Would you like to display collections on your...”</p>
+                <p class="muted small-text">2 mins ago</p>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="inline pull-right">
+              <div class="tiles text-white p-t-5 p-l-5 p-b-5 p-r-5 inline"> <i class="fa fa-heart-o fa-lg"></i> 
+              </div>
+              <div class="tiles white p-t-5 p-l-5 p-b-5 p-r-5 inline"> <i class="fa fa-comment-o fa-lg"></i> 
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="p-t-20 p-b-15 b-b b-grey">
+          <div class="post overlap-left-10">
+            <div class="user-profile-pic-wrapper">
+              <div class="user-profile-pic-2x tiles blue white-border">
+                <div class="text-white inherit-size p-t-10 p-l-15"> <i class="fa fa-map-marker fa-lg"></i> 
+                </div>
+              </div>
+            </div>
+            <div class="info-wrapper small-width">
+              <div class="info text-black ">
+                <p>You’ve got 302 Followers in 59 Diffrent places. region legally identified as a distinct entity in ....”</p>
+                <p class="muted small-text">2 mins ago</p>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="inline pull-right">
+              <div class="tiles text-white p-t-5 p-l-5 p-b-5 p-r-5 inline"> <i class="fa fa-heart-o fa-lg"></i> 
+              </div>
+              <div class="tiles white p-t-5 p-l-5 p-b-5 p-r-5 inline"> <i class="fa fa-comment-o fa-lg"></i> 
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div class="p-t-20 p-b-15 ">
+          <div class="post overlap-left-10">
+            <div class="user-profile-pic-wrapper">
+              <div class="user-profile-pic-2x tiles grey white-border">
+                <div class="text-grey inherit-size p-t-10 p-l-10"> <i class="fa fa-clock-o fa-lg"></i> 
+                </div>
+              </div>
+            </div>
+            <div class="info-wrapper small-width">
+              <div class="info text-black ">
+                <p>Jane Smith Commented on webarch new year bundle “Would you like to display collections on your...”</p>
+                <p class="muted small-text">2 mins ago</p>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+            <div class="inline pull-right">
+              <div class="tiles text-white p-t-5 p-l-5 p-b-5 p-r-5 inline"> <i class="fa fa-heart-o fa-lg"></i> 
+              </div>
+              <div class="tiles white p-t-5 p-l-5 p-b-5 p-r-5 inline"> <i class="fa fa-comment-o fa-lg"></i> 
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+      <div class="tiles grey p-t-5 p-b-5 ">
+        <p class="text-center"> <a href="javascript:;" class="text-black semi-bold  small-text">Load More</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

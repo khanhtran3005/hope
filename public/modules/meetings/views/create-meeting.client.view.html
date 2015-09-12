@@ -1,0 +1,230 @@
+<div class="modal-header" ng-init="loadSprints()">
+    <button type="button" class="close" data-dismiss="modal" data-ng-click="cancel()">
+        <span aria-hidden="true">&times;</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <h4 class="modal-title" style="text-transform: uppercase" ng-if="isNew">New Meeting</h4>
+    <h4 class="modal-title" style="text-transform: uppercase" ng-if="!isNew">Update Meeting</h4>
+</div>
+<div class="modal-body project-modal">
+    <div class="row" ng-if="isNew">
+        <div class="col-md-12">
+            <form data-ng-submit="create()" name="new-meeting">
+                <div class="form-group">
+                    <label class="control-label" for="name">What</label>
+                    <div class="input-group">
+                        <input type="text" data-ng-model="meeting.name" id="name" class="form-control" placeholder="What" required utocomplete="off">
+                        <span class="input-group-addon primary">
+                            <span class="arrow"></span>
+                        <i class="fa fa-align-right"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">When</label>
+                    <a class="dropdown-toggle my-toggle-select" id="startDate" role="button" data-toggle="dropdown" data-target="#" href="">
+                        <div class="input-group">
+                            <input type="text" data-ng-model="meeting.startDate" mo-date-input="{{dateFormat}}" mo-medium-date="{{dateFormat}}" id="name" class="form-control" placeholder="Start" required autocomplete="off">
+                            <span class="input-group-addon primary">
+                            <span class="arrow"></span>
+                            <i class="fa fa-clock-o"></i>
+                            </span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="startDate" ng-show="meeting.isAllDay">
+                        <datetimepicker data-ng-model="meeting.startDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', minView:'day' }"></datetimepicker>
+                    </ul>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="startDate" ng-show="!meeting.isAllDay">
+                        <datetimepicker data-ng-model="meeting.startDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', minView:'minute', minuteStep: 5}"></datetimepicker>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">End date</label>
+                    <span class="help">You can ignore this field</span>
+                    <a class="dropdown-toggle my-toggle-select" id="endDate" role="button" data-toggle="dropdown" data-target="#" href="">
+                        <div class="input-group">
+                            <input type="text" data-ng-model="meeting.endDate" mo-date-input="{{dateFormat}}" mo-medium-date="{{dateFormat}}" id="name" class="form-control" placeholder="End" autocomplete="off">
+                            <span class="input-group-addon primary">
+                            <span class="arrow"></span>
+                            <i class="fa fa-clock-o"></i>
+                            </span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="endDate" ng-show="meeting.isAllDay">
+                        <datetimepicker data-ng-model="meeting.endDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', minView:'day' }"></datetimepicker>
+                    </ul>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="endDate" ng-show="!meeting.isAllDay">
+                        <datetimepicker data-ng-model="meeting.endDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', minView:'minute', minuteStep: 5}"></datetimepicker>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox check-primary">
+                        <input id="all-day" type="checkbox" ng-model="meeting.isAllDay">
+                        <label for="all-day">All day</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Meeting type</label>
+                    <div class="input-group">
+                        <ui-select ng-model="types.selected" theme="bootstrap">
+                            <ui-select-match placeholder="Select or search a meeting type...">{{$select.selected.display}}</ui-select-match>
+                            <ui-select-choices repeat="item in types | filter: $select.search">
+                                <div ng-bind-html="item.display | highlight: $select.search"></div>
+                                <!-- <small ng-bind-html="item.email | highlight: $select.search"></small> -->
+                            </ui-select-choices>
+                        </ui-select>
+                        <span class="input-group-addon primary">
+                            <span class="arrow"></span>
+                        <i class="fa fa-tag"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Sprint</label>
+                    <div class="input-group">
+                        <ui-select ng-model="listSprints.selected" theme="bootstrap">
+                            <ui-select-match placeholder="Select or search a meeting sprint...">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="item in listSprints | filter: $select.search">
+                                <span class="semi-bold">{{item.name}}</span>
+                                <br>
+                                <small>from: {{item.startDate | date:'mediumDate'}} to: {{item.endDate | date:'mediumDate'}}</small>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span class="input-group-addon primary">
+                            <span class="arrow"></span>
+                        <i class="fa fa-tag"></i>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
+
+                <div class="modal-footer row m-t-10">
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-disabled="new-meeting.$invalid">Create</button>
+                    <button type="button" class="btn btn-default" data-ng-click="cancel()">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" ng-if="!isNew">
+        <div class="col-md-12">
+            <form data-ng-submit="update()" name="new-meeting">
+                <!-- <div class="form-group">
+                    <label class="form-label">When</label>
+                    <div class="input-group">
+                        <input type="daterange" ng-model="duration" separator="&#8667;" format="MMM Do YYYY" class="form-control" placeholder="Username">
+                        <span class="input-group-addon primary">
+                            <span class="arrow"></span>
+                        <i class="fa fa-th"></i>
+                        </span>
+                    </div>
+                </div> -->
+
+                <div class="form-group">
+                    <label class="control-label" for="name">What</label>
+                    <div class="input-group">
+
+                        <input type="text" data-ng-model="event.name" id="name" class="form-control" placeholder="What" required>
+                        <span class="input-group-addon primary">
+                            <span class="arrow"></span>
+                        <i class="fa fa-align-right"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">When</label>
+                    <a class="dropdown-toggle my-toggle-select" id="startDate" role="button" data-toggle="dropdown" data-target="#" href="">
+                        <div class="input-group">
+                            <input type="text" data-ng-model="event.startDate" mo-date-input="{{dateFormat}}" mo-medium-date="{{dateFormat}}" id="name" class="form-control" placeholder="Start date" required autocomplete="off">
+                            <span class="input-group-addon primary">
+                            <span class="arrow"></span>
+                            <i class="fa fa-clock-o"></i>
+                            </span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="startDate" ng-show="event.isAllDay">
+                        <datetimepicker data-ng-model="event.startDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', minView:'day' }"></datetimepicker>
+                    </ul>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="startDate" ng-show="!event.isAllDay">
+                        <datetimepicker data-ng-model="event.startDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', minView:'minute', minuteStep: 5}"></datetimepicker>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">End date</label>
+                    <a class="dropdown-toggle my-toggle-select" id="endDate" role="button" data-toggle="dropdown" data-target="#" href="">
+                        <div class="input-group">
+                            <input type="text" data-ng-model="event.endDate" mo-date-input="{{dateFormat}}" mo-medium-date="{{dateFormat}}" id="name" class="form-control" placeholder="End date" autocomplete="off">
+                            <span class="input-group-addon primary">
+                            <span class="arrow"></span>
+                            <i class="fa fa-clock-o"></i>
+                            </span>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="endDate" ng-show="event.isAllDay">
+                        <datetimepicker data-ng-model="event.endDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', minView:'day' }"></datetimepicker>
+                    </ul>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="endDate" ng-show="!event.isAllDay">
+                        <datetimepicker data-ng-model="event.endDate" data-datetimepicker-config="{ dropdownSelector: '.my-toggle-select', minView:'minute', minuteStep: 5}"></datetimepicker>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox check-primary">
+                        <input id="all-day" type="checkbox" ng-model="event.isAllDay">
+                        <label for="all-day">All day</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Meeting type</label>
+                    <div class="input-group">
+                        <ui-select ng-model="types.selected" theme="bootstrap">
+                            <ui-select-match placeholder="Select or search a meeting type...">{{$select.selected.display}}</ui-select-match>
+                            <ui-select-choices repeat="item in types | filter: $select.search">
+                                <div ng-bind-html="item.display | highlight: $select.search"></div>
+                                <!-- <small ng-bind-html="item.email | highlight: $select.search"></small> -->
+                            </ui-select-choices>
+                        </ui-select>
+                        <span class="input-group-addon primary">
+                            <span class="arrow"></span>
+                        <i class="fa fa-tag"></i>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Sprint</label>
+                    <div class="input-group">
+                        <ui-select ng-model="listSprints.selected" theme="bootstrap">
+                            <ui-select-match placeholder="Select or search a meeting sprint...">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="item in listSprints | filter: $select.search">
+                                <span class="semi-bold">{{item.name}}</span>
+                                <br>
+                                <small>from: {{item.startDate | date:'mediumDate'}} to: {{item.endDate | date:'mediumDate'}}</small>
+                            </ui-select-choices>
+                        </ui-select>
+                        <span class="input-group-addon primary">
+                            <span class="arrow"></span>
+                        <i class="fa fa-tag"></i>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div data-ng-show="error" class="text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
+
+                <div class="modal-footer row m-t-10">
+                    <button type="button" class="btn btn-danger pull-left" data-ng-click="remove()"><i class="fa fa-trash-o"></i></button>
+                    <a class="btn btn btn-success" ng-click="cancel()" ui-sref="viewProject.viewMeeting({ projectId: $root.currentProject._id, meetingId:  event._id})">Details</a>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal" ng-disabled="new-meeting.$invalid">Update</button>
+                    <button type="button" class="btn btn-default" data-ng-click="cancel()">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

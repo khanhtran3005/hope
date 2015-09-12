@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>{{title}}</title>
+
+  <!-- General META -->
+  <meta charset="utf-8">
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <!-- <meta name="viewport" content="width=device-width,initial-scale=1"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <!-- Semantic META -->
+  <meta name="keywords" content="{{keywords}}">
+  <meta name="description" content="{{description}}">
+
+  <!-- Facebook META -->
+  <meta property="fb:app_id" content="{{facebookAppId}}">
+  <meta property="og:site_name" content="{{title}}">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:url" content="{{url}}">
+  <meta property="og:image" content="/img/brand/logo.png">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter META -->
+  <meta name="twitter:title" content="{{title}}">
+  <meta name="twitter:description" content="{{description}}">
+  <meta name="twitter:url" content="{{url}}">
+  <meta name="twitter:image" content="/img/brand/logo.png">
+
+  <!-- Fav Icon -->
+  <link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+  <!--Application CSS Files-->
+  {% for cssFile in cssFiles %}<link rel="stylesheet" type="text/css" href="{{cssFile}}">
+  {% endfor %}
+
+  <!-- HTML5 Shim -->
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body class="ng-cloak">
+    
+    
+
+    <!-- BEGIN CONTAINER -->
+    <div class="page-container row-fluid">
+        <div ng-controller="ProjectsController as project" ng-init="find()" >
+          <div ng-include="'/modules/core/views/header.client.view.html'"></div>
+          <!-- BEGIN SIDEBAR -->
+          <div ng-include="'/modules/core/views/sidebar.client.view.html'"></div>
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN PAGE CONTAINER-->
+        <div class="page-content">
+            <toaster-container ng-controller="ToasterController" toaster-options="{'time-out': 3000, 'close-button':true, 'animation-class': 'toast-bottom-right'}"></toaster-container>
+            <div class="content">
+              {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    <!-- END CONTAINER -->
+    <!-- BEGIN CHAT -->
+    <div include="'/modules/chats/views/list-chats.client.view.html'"></div>
+    <!-- END CHAT -->
+    <!-- END CONTAINER -->
+
+
+    <!--Embedding The User Object-->
+    <script type="text/javascript">
+      var user = {{ user | json | safe }};
+    </script>
+
+    <!--Application JavaScript Files-->
+    {% for jsFile in jsFiles %}<script type="text/javascript" src="{{jsFile}}" defer></script>
+    {% endfor %} 
+
+    {% if process.env.NODE_ENV === 'development' %}
+    <!--Livereload script rendered -->
+    <!-- <script type="text/javascript" src="http://localhost:35729/livereload.js"></script> -->
+
+    {% endif %}
+</body>
+
+</html>

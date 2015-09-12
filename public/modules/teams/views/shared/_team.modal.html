@@ -1,0 +1,51 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" data-ng-click="cancel()">
+    <span aria-hidden="true">&times;</span>
+    <span class="sr-only">Close</span>
+  </button>
+  <h4 class="modal-title" style="text-transform: uppercase">TEAM</h4>
+</div>
+<div class="modal-body project-modal" data-ng-init="show()">
+  <div class="row">
+    <div class="grid simple vertical red">
+      <div class="grid-body no-border">
+        <div class="row-fluid">
+          <div class="row">
+            <label class="col-xs-2" for="name">Name</label>
+            <div class="col-xs-10">
+              <input type="text" class="form-control" id="name" placeholder="Name" data-ng-model="team.name">
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-xs-12" for="description">Description</label>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <textarea class="form-control" id="description" rows="6" style="resize: none;" data-ng-model="team.desc"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grid simple vertical green" ng-if="!isNew">
+      <div class="grid-title no-border">
+        <h4>
+          <span class="semi-bold">History</span>
+        </h4>
+        <div class="tools">
+          <a href="javascript:;" class="expand"></a>
+        </div>
+      </div>
+      <div class="grid-body no-border" style="overflow: hidden; display: none;">
+        <div class="row-fluid">
+          <div ng-include src="'modules/audits/views/list-audits.client.view.html'"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger pull-left" data-dismiss="modal" data-ng-click="remove()" ng-if="!isNew && !team.locked">Delete</button>
+  <button type="button" class="btn btn-primary" data-dismiss="modal" data-ng-click="save()">Save</button>
+  <button type="button" class="btn btn-default" data-ng-click="cancel()">Close</button>
+</div>

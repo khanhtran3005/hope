@@ -1,0 +1,118 @@
+<section data-ng-controller="SettingsController">
+  <div class="col-md-12">
+    <form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid)" novalidate>
+      <div class="grid simple">
+        <div class="grid-title no-border">
+          <h3>Edit your profile</h3>
+        </div>
+        <div class="grid-body no-border">
+          <br>
+          <div class="row">
+            <div class="col-md-8 col-sm-10 col-xs-12">
+              <div class="form-group">
+
+                <div class="profile-picture" ng-multiple="false" ng-file-select="" ng-model="files" ng-file-change="updateProfilePicture(files)" ng-multiple="true" ng-accept="'image/*'">
+                  <img ng-src="{{user.profileURL}}" width="100">
+                </div>
+
+              </div>
+              <div ng-class="{'has-error': userForm.name.$error.required&&userForm.name.$dirty}" class="form-group">
+                <label class="form-label">First Name</label>
+                <div class="input-group">
+                  <input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name">
+                  <span class="input-group-addon primary">
+                                        <span class="arrow"></span>
+                  <i class="fa fa-align-justify"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <div class="input-group">
+                  <input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name">
+                  <span class="input-group-addon primary">
+                                        <span class="arrow"></span>
+                  <i class="fa fa-align-justify"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Title</label>
+                <div class="input-group">
+                  <input type="text" id="username" name="username" class="form-control" value="{{user.title}}" placeholder="Username" disabled>
+                  <span class="input-group-addon primary">
+                                        <span class="arrow"></span>
+                  <i class="fa fa-th"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <div class="input-group">
+                  <input type="email" id="email" name="email" class="form-control" data-ng-model="user.email" placeholder="Email">
+                  <span class="input-group-addon primary">
+                                        <span class="arrow"></span>
+                  <i class="fa fa-envelope-o"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Username</label>
+                <div class="input-group">
+                  <input type="text" id="username" name="username" class="form-control" value="{{user.username}}" placeholder="Username" disabled>
+                  <span class="input-group-addon primary">
+                                        <span class="arrow"></span>
+                  <i class="fa fa-user"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Skype</label>
+                <div class="input-group">
+                  <input type="text" id="skype" name="skype" class="form-control" data-ng-model="user.skype" placeholder="Skpye">
+                  <span class="input-group-addon primary">
+                                        <span class="arrow"></span>
+                  <i class="fa fa-skype"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Facebook</label>
+                <div class="input-group">
+                  <input type="text" id="facebook" name="facebook" class="form-control" data-ng-model="user.facebook" placeholder="Facebook">
+                  <span class="input-group-addon primary">
+                                        <span class="arrow"></span>
+                  <i class="fa fa-facebook"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone</label>
+                <div class="input-group">
+                  <input type="text" id="phone" name="phone" class="form-control" data-ng-model="user.phone" placeholder="Phone">
+                  <span class="input-group-addon primary">
+                                        <span class="arrow"></span>
+                  <i class="fa fa-phone"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="checkbox check-success">
+                <input id="public" type="checkbox" value="1" data-ng-model="user.user_public">
+                <label for="public">Public Profile</label>
+              </div>
+              <div class="form-group">
+                <p>
+                  <input ng-disabled="userForm.$invalid" type="submit" value="Save" class="btn btn-primary btn-cons">
+                  <strong data-ng-show="success" class="text-center text-success">Profile Saved Successfully</strong>
+                  <strong data-ng-show="error" data-ng-bind="error" class="text-center text-danger"></strong>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

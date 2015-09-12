@@ -1,0 +1,59 @@
+<section data-ng-controller="EmployeesController" data-ng-init="listPublicMember()">
+  <div class="row">
+    <div class="col-md-6 col-sm-6">
+      <div class="grid simple">
+        <div class="grid-title no-border">
+          <h4>Search</h4>
+          <div class="tools">
+            <a href="javascript:;" class="collapse"></a>
+          </div>
+        </div>
+        <div class="grid-body no-border">
+          <div class="notification-messages danger">
+            <input type="text" style="width: 100%" ng-model="keyword" ng-change="freeMembers(keyword)"></input>
+          </div>
+          <div class="notification-messages info" data-ng-repeat="member in listFreeMember.members">
+            <div class="row">
+              <div class="col-md-9">
+                <div class="user-profile"> <img src="{{member.profileURL}}" width="35" height="35"> </div>
+                <div class="message-wrapper">
+                  <div class="heading"> {{member.displayName}}</div>
+                  <div class="description">{{member.email}}</div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="btn btn-success" ng-click="inviteMember(member)">Invite</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-6">
+      <div class="grid simple">
+        <div class="grid-title no-border">
+          <h4>Public</h4>
+          <div class="tools">
+            <a href="javascript:;" class="collapse"></a>
+          </div>
+        </div>
+        <div class="grid-body no-border">
+          <div class="notification-messages info" data-ng-repeat="member in public_members">
+            <div class="row">
+              <div class="col-md-9">
+                <div class="user-profile"> <img src="{{member.profileURL}}" width="35" height="35"> </div>
+                <div class="message-wrapper">
+                  <div class="heading"> {{member.displayName}}</div>
+                  <div class="description">{{member.email}}</div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="btn btn-success" ng-click="inviteMember(member)">Invite</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

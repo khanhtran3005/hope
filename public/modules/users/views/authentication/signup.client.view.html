@@ -1,0 +1,83 @@
+<section class="row" data-ng-controller="AuthenticationController">
+    <div class="login clearfix">
+        <div class="logo">
+            <a href="index.html">
+                <img src="assets/img/logo.png" alt="logo hope" height="90px">
+            </a>
+        </div>
+        <div class="content">
+            <!-- BEGIN LOGIN FORM -->
+            <form class="login-form" data-ng-submit="signup()" autocomplete="off">
+                <h3 class="form-title">Sign Up</h3>
+                <p>
+                    Enter your personal details below:
+                </p>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">First name</label>
+                    <div class="input-icon">
+                        <i class="fa fa-font"></i>
+                        <input type="text" required id="firstName" name="firstName" class="form-control placeholder-no-fix" data-ng-model="credentials.firstName" placeholder="First name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">Last name</label>
+                    <div class="input-icon">
+                        <i class="fa fa-font"></i>
+                        <input type="text" required id="lastName" name="lastName" class="form-control placeholder-no-fix" data-ng-model="credentials.lastName" placeholder="Last name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">Email</label>
+                    <div class="input-icon">
+                        <i class="fa fa-envelope-o "></i>
+                        <input type="text" required id="email" name="email" class="form-control placeholder-no-fix" data-ng-model="credentials.email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">Username</label>
+                    <div class="input-icon">
+                        <i class="fa fa-user"></i>
+                        <input type="text" required id="username" name="username" class="form-control placeholder-no-fix" data-ng-model="credentials.username" placeholder="Username">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label visible-ie8 visible-ie9">Password</label>
+                    <div class="input-icon">
+                        <i class="fa fa-lock"></i>
+                        <input type="password" required id="password" name="password" class="form-control placeholder-no-fix" data-ng-model="credentials.password" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group alert alert-danger help-block" data-ng-show="error" class="text-center text-danger"><strong data-ng-bind="error"></strong>
+                </div>
+                <div class="form-actions">
+                    <a id="register-back-btn" class="btn default" ui-sref="signin">
+                        <i class="m-icon-swapleft"></i> Sign in </a>
+                    <button type="submit" class="btn green pull-right">
+                        Đăng ký <i class="m-icon-swapright m-icon-white"></i>
+                    </button>
+                </div>
+                <div class="login-options">
+                    <h4>Hoặc đăng ký với</h4>
+                    <ul class="social-icons">
+                        <li>
+                            <a class="facebook" data-original-title="facebook" href="/auth/facebook">
+                            </a>
+                        </li>
+                        <li>
+                            <a class="twitter" data-original-title="Twitter" href="/auth/twitter">
+                            </a>
+                        </li>
+                        <li>
+                            <a class="googleplus" data-original-title="Goole Plus" href="/auth/google">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </form>
+            <!-- END LOGIN FORM -->
+        </div>
+        <div class="copyright">
+            2014 © KT project.
+        </div>
+    </div>
+</section>

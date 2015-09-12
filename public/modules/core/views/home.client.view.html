@@ -1,0 +1,20 @@
+<div ng-controller="HomeController as home" ng-init="loadSprints()">
+    <div class="row burndown">
+        <div class="col-md-12">
+        <label for="listSprints">Chose another sprint <select ng-model="listSprints.selected" name="listSprints" ng-options="sprint.name for sprint in listSprints track by sprint._id" ng-change="burndown()"></select></label>
+            <h3 class="text-warning" ng-hide="sprints">There is no data for this sprint</h3 class="text-warning">
+            <div class="grid simple" ng-show="sprints">
+                <div class="grid-body no-border">
+                    <h2>Burndown Chart</h2>
+			    	<div ng-repeat="sprint in sprints">
+					    <nvd3 options="options" data="sprint.data" config="config"></nvd3>
+					    <div class="sprint-info">
+					        <h4 class="sprint-name" ng-bind="sprint.name"></h4>
+					        <p class="duration">Start: {{sprint.startDate | date:'mediumDate'}} -- End: {{sprint.endDate | date:'mediumDate'}}</p>
+					    </div>
+					</div>
+			    </div>
+			</div>
+		</div>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+<div class="header navbar navbar-inverse" data-ng-controller="HeaderController as header" ng-init="initMenu()">
+	<!-- BEGIN HEADER -->
+        <!-- BEGIN TOP NAVIGATION BAR -->
+        <div class="navbar-inner">
+            <div class="header-seperation">
+                <ul class="nav pull-left notifcation-center" id="main-menu-toggle-wrapper" style="display:none">
+                    <li class="dropdown">
+                        <a id="main-menu-toggle" href="#main-menu" class="">
+                            <div class="iconset top-menu-toggle-white"></div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- BEGIN LOGO -->
+                <a ui-sref="home">
+                    <img src="assets/img/logo.png" class="logo" alt="" data-src="assets/img/logo.png" data-src-retina="assets/img/logo2x.png" width="106" height="50" />
+                </a>
+                <!-- END LOGO -->
+                <ul class="nav pull-right notifcation-center">
+                    <!--  <li class="dropdown" id="header_task_bar">
+                        <a ui-sref="home" class="dropdown-toggle active" data-toggle="">
+                            <div class="iconset top-home"></div>
+                        </a>
+                    </li> -->
+                    <!-- <li class="dropdown" id="header_inbox_bar">
+                        <a href="email.html" class="dropdown-toggle">
+                            <div class="iconset top-messages"></div>
+                            <span class="badge" id="msgs-badge">2</span>
+                        </a>
+                    </li> -->
+                    <li class="dropdown" id="portrait-chat-toggler" style="display:none">
+                        <a href="javascript:;" ng-click="header.navigation" class="chat-menu-toggle">
+                            <div class="iconset top-chat-white "></div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- END RESPONSIVE MENU TOGGLER -->
+            <div class="header-quick-nav">
+                <!-- BEGIN TOP NAVIGATION MENU -->
+                <div class="pull-left">
+                    <ul class="nav quick-section">
+                        <li class="quicklinks">
+                            <a href="#" class="" id="layout-condensed-toggle">
+                                <div class="iconset top-menu-toggle-dark"></div>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav quick-section">
+                        <li class="current-project">
+                            <p class="bold pull-left m-t-10 m-r-10">Current Project </p>
+                            <ui-select on-select="selected($item, $model)" ng-model="projects.selected" theme="select2" ng-disabled="disabled" search-enabled="searchEnabled" style="min-width: 230px;">
+                                <ui-select-match placeholder="Select or type search project">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="project in projects | props: {name: $select.search}" class="text-left">
+                                    <div class="semi-bold" ng-bind-html="project.name | highlight: $select.search"></div>
+                                    <small ng-show="project.description">
+                                    <!-- email: {{projects.email}} -->
+                                    desc: <span ng-bind-html="''+project.description | highlight: $select.search"></span>
+                                    </small>
+                                </ui-select-choices>
+                            </ui-select>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END TOP NAVIGATION MENU -->
+                <!-- BEGIN CHAT TOGGLER -->
+                <div class="pull-right">
+                    <div class="chat-toggler">
+                        <a ui-sref="profile" class="m-r-15" id="my-task-list" data-placement="bottom" data-content='' data-toggle="dropdown" data-original-title="Notifications">
+                            <div class="user-details">
+                                <div class="username">
+                                    <span class="bold" ng-bind="user.firstName"></span>
+                                    {{user.lastName}}
+                                </div>
+                            </div>
+                        </a>
+                        <div class="profile-pic">
+                            <img ng-src="{{user.profileURL}}" alt="" width="35" height="35" />
+                        </div>
+                    </div>
+                    <ul class="nav quick-section ">
+                        <li class="quicklinks">
+                            <a data-toggle="dropdown" class="dropdown-toggle  pull-right " href="#" id="user-options">
+                                <div class="iconset top-settings-dark "></div>
+                            </a>
+                            <ul class="dropdown-menu  pull-right" role="menu" aria-labelledby="user-options">
+                                <li><a ui-sref="profile"> My Account</a>
+                                </li>
+                                <li><a ui-sref="accounts">Social account&nbsp;&nbsp;&nbsp;<span class="badge badge-important animated bounceIn" ng-bind="totalSocialAccount"></span></a>
+                                </li>
+                                </li>
+                                <li class="divider"></li>
+                                <li><a href="/auth/signout"><i class="fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="quicklinks">
+                            <span class="h-seperate"></span>
+                        </li>
+                        <li class="quicklinks">
+                            <a id="chat-menu-toggle" href="javascript:;" ng-click="header.chatToggle()" class="chat-menu-toggle">
+                                <div class="iconset top-chat-dark ">
+                                    <span class="badge badge-important hide" id="chat-message-count">1</span>
+                                </div>
+                            </a>
+                            <div class="simple-chat-popup chat-menu-toggle hide">
+                                <div class="simple-chat-popup-arrow"></div>
+                                <div class="simple-chat-popup-inner">
+                                    <div style="width:100px">
+                                        <div class="semi-bold">David Nester</div>
+                                        <div class="message">Hey you there</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- END CHAT TOGGLER -->
+            </div>
+            <!-- END TOP NAVIGATION MENU -->
+
+        </div>
+        <!-- END TOP NAVIGATION BAR -->
+    <!-- </div> -->
+    <!-- END HEADER -->
+</div>

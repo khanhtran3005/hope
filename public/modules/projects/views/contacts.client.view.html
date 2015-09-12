@@ -1,0 +1,49 @@
+<section data-ng-controller="EmployeesController" data-ng-init="find()" class="contacts">
+  <div class="row">
+    <div class="tiles white col-md-12 no-padding">
+      <div class="tiles-body">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-4" data-ng-repeat="member in members">
+            <div class="friend-list bg-light-grey">
+              <div class="friend-profile-pic">
+                <div class="user-profile-pic-normal">
+                  <img width="35" height="35" src="{{member.profileURL}}">
+                </div>
+              </div>
+              <div class="friend-details-wrapper">
+                <div class="friend-name">
+                  <b>{{member.displayName}}</b>
+                </div>
+                <div class="friend-description">
+                  {{member.title}}
+                </div>
+                <div>
+                  <ul class="list-contacts">
+                    <li ng-if="member.email.toString() !== ''"> <a href="mailto:{{member.email}}"><i class="fa fa-envelope"></i> {{member.email}}</a>
+                    </li>
+                    <li ng-if="member.facebook.toString() !== '' && member.facebook.toString() !== undefined"> <a href="https://www.facebook.com/{{member.facebook}}"><i class="fa fa-facebook"></i> {{member.facebook}}</a>
+                    </li>
+                    <li ng-if="member.skype.toString() !== '' && member.skype.toString() !== undefined"> <a href="skype:{{member.skype}}?chat"><i class="fa fa-skype"></i> {{member.skype}}</a>
+                    </li>
+                    <li ng-if="member.phone.toString() !== '' && member.phone.toString() !== undefined"><i class="fa fa-phone"></i> {{member.phone}}</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="pull-right" data-ng-if="member.accept">
+                <a ui-sref="viewProject.member_report({projectId: $root.currentProjectId, userId: member._id})" class="badge badge-primary"><i class="fa fa-user"></i></a>
+                <span class="badge badge-success"><i class="fa fa-check"></i></span>
+                <a href="javascript:;" class="badge badge-danger" ng-click="deleteMember(member)"><i class="fa fa-trash"></i></a>
+              </div>
+              <div class="pull-right" data-ng-if="!member.accept">
+                <span class="badge" title="Waiting for confirming"><i class="fa fa-spinner"></i></span>
+                <a href="javascript:;" class="badge badge-danger" ng-click="deleteInviteMember(member)"><i class="fa fa-trash"></i></a>
+              </div>
+              <div class="clearfix"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

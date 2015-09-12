@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta charset="utf-8" />
+    <title>HOPE - A Scurm methodology</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- Semantic META -->
+    <meta name="keywords" content="{{keywords}}">
+    <meta name="description" content="{{description}}">
+
+    <!-- Facebook META -->
+    <meta property="fb:app_id" content="{{facebookAppId}}">
+    <meta property="og:site_name" content="{{title}}">
+    <meta property="og:title" content="{{title}}">
+    <meta property="og:description" content="{{description}}">
+    <meta property="og:url" content="{{url}}">
+    <meta property="og:image" content="/img/brand/logo.png">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter META -->
+    <meta name="twitter:title" content="{{title}}">
+    <meta name="twitter:description" content="{{description}}">
+    <meta name="twitter:url" content="{{url}}">
+    <meta name="twitter:image" content="/img/brand/logo.png">
+
+    <!-- Fav Icon -->
+    <link href="/modules/core/img/brand/favicon.ico" rel="shortcut icon" type="image/x-icon"> {% for cssFile in cssSigninFiles %}
+    <link rel="stylesheet" type="text/css" href="{{cssFile}}"> {% endfor %}
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+
+<boby class="ng-cloak">
+    <div>
+        <section data-ui-view>
+            <section class="row" data-ng-controller="AuthenticationController">
+                <div class="login clearfix">
+                    <div class="logo">
+                        <a ui-sref="home">
+                            <img src="assets/img/logo.png" alt="logo hope" height="90px">
+                        </a>
+                    </div>
+                    <div class="content">
+                        <!-- BEGIN LOGIN FORM -->
+                        <form class="login-form" data-ng-submit="signin()" autocomplete="off">
+                            <h3 class="form-title">Login to your account</h3>
+                            <div class="form-group">
+                                <label class="control-label visible-ie8 visible-ie9">Username</label>
+                                <div class="input-icon">
+                                    <i class="fa fa-user"></i>
+                                    <input class="form-control placeholder-no-fix" type="text" data-ng-model="credentials.username" placeholder="Username" name="username">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label visible-ie8 visible-ie9">Password</label>
+                                <div class="input-icon">
+                                    <i class="fa fa-lock"></i>
+                                    <input class="form-control placeholder-no-fix" type="password" data-ng-model="credentials.password" placeholder="Password" name="password">
+                                </div>
+                            </div>
+                            <div class="form-group alert alert-danger help-block" data-ng-show="error" class="text-center text-danger"><strong data-ng-bind="error"></strong></div>
+                            <div class="form-actions clearfix">
+                                <button type="submit" class="btn green pull-right">
+                                    Login <i class="m-icon-swapright m-icon-white"></i>
+                                </button>
+                            </div>
+                            <div class="login-options">
+                                <h4>Or login with</h4>
+                                <ul class="social-icons">
+                                    <li>
+                                        <a class="facebook" data-original-title="facebook" href="/auth/facebook">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="twitter" data-original-title="Twitter" href="/auth/twitter">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="googleplus" data-original-title="Goole Plus" href="/auth/google">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="forget-password">
+                                <h4>Forgot your password ?</h4>
+                                <p>no worries, click <a ui-sref="forgot" id="forget-password">here </a> to reset your password.</p>
+                            </div>
+                            <div class="create-account">
+                                <p>Don't have an account yet ?&nbsp; <a ui-sref="signup" id="register-btn">Create an account </a>
+                                </p>
+                            </div>
+
+                        </form>
+                        <!-- END LOGIN FORM -->
+                    </div>
+                    <div class="copyright">
+                        2014 © KT project.
+                    </div>
+                </div>
+            </section>
+
+        </section>
+    </div>
+    <!-- END CONTAINER -->
+    {% for jsFile in jsSigninFiles %}
+    <script type="text/javascript" src="{{jsFile}}"></script>
+    {% endfor %}
+</body>
+
+</html>
