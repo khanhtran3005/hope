@@ -1,6 +1,6 @@
-#How to install
+# How to install
 
-###Cài đặt NodeJS:
+### Cài đặt NodeJS:
 
 1. Khởi động Terminal của Ubuntu.
 2. $``curl https://raw.githubusercontent.com/creationix/nvm/v0.11.1/install.sh | bash``
@@ -13,7 +13,7 @@
 9. Sau đó kiểm tra NodeJS đã chạy tự động hay chưa: $``which node``
 10. Nếu trên terminal xuất hiện: ``/usr/local/bin/node`` thì báo hiệu rằng NodeJS đã chạy tự động với phiên bản v0.10.13.
 
-###Cài đặt MongoDB:
+### Cài đặt MongoDB:
 1. $``sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10``
 2. $``echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" | tee -a /etc/apt/sources.list.d/10gen.list``
 3. $``apt-get -y update``
@@ -21,13 +21,13 @@
 5. $``sudo bash ./mongo_install.bash``
 6. Nếu cài đặt thành công, trên terminal sẽ xuất hiện: ``mongodb start/running, process 2368``
 
-###Cài đặt FFmpeg
+### Cài đặt FFmpeg
 1. $``sudo add-apt-repository ppa:jon-severinsson/ffmpeg``
 2. $``sudo apt-get update``
 3. $``sudo apt-get install ffmpeg``
 4. $``sudo apt-get install frei0r-plugins``
 
-###Cài đặt ứng dụng:
+### Cài đặt ứng dụng:
 1. Di chuyển đến thư mục chứa ứng dụng
 2. $``sudo apt-get install build-essential``
 3. $``npm intsall``
@@ -36,7 +36,7 @@
 6. Vào trình duyệt web và $địa chỉ trên. Nếu thành công, trình duyệt sẽ xuất hiện giao diện đăng $của ứng dụng.
 7. Kết thúc.
 
-###Refs:
+### Refs:
 1. https://www.digitalocean.com/community/tutorials/how-to-install-node-js-with-nvm-node-version-manager-on-a-vps
 2. http://docs.mongodb.org/manual/tutorial/install-mongodb-on-ubuntu/
 3. http://meanjs.org/docs.html
