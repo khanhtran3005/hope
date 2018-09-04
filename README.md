@@ -1,7 +1,8 @@
 # Demo
-    - Sprint management: https://youtu.be/cdsXfCd1Muo
-    - Backlog management: https://youtu.be/0v7TChLomc0
-    - Conference: https://youtu.be/d1VeT39TiTs
+
+- Sprint management: https://youtu.be/cdsXfCd1Muo
+- Backlog management: https://youtu.be/0v7TChLomc0
+- Conference: https://youtu.be/d1VeT39TiTs
 
 # How to install
 
